@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html class="light" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>任务异常统计页</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00b2b2",
+                        "background-light": "#f8fafc",
+                        "background-dark": "#17191c",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#23262a",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        body { min-height: 100dvh; }
+        .material-symbols-outlined.filled { font-variation-settings: 'FILL' 1; }
+        .chart-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 0;
+        }
+    </style>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden pb-28">
+<header class="sticky top-0 z-30 bg-surface-light/90 dark:bg-surface-dark/90 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 px-4 py-3 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<button class="p-1 -ml-1">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-300">chevron_left</span>
+</button>
+<h1 class="text-base font-bold text-slate-900 dark:text-white leading-tight">任务异常统计</h1>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-300">calendar_month</span>
+</button>
+<button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-300">filter_list</span>
+</button>
+</div>
+</header>
+<main class="flex flex-col gap-4 p-4">
+<section class="p-4 rounded-2xl bg-surface-light dark:bg-surface-dark border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col gap-6">
+<div>
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-sm font-bold flex items-center gap-2">
+<span class="size-2 rounded-full bg-red-500"></span>
+                        超时任务趋势
+                    </h2>
+<span class="text-[10px] font-medium text-slate-400 bg-slate-50 dark:bg-slate-800 px-2 py-0.5 rounded">最近7天</span>
+</div>
+<div class="relative h-24 w-full flex items-end justify-between gap-1">
+<div class="flex-1 flex flex-col items-center gap-1">
+<div class="w-full bg-red-100 dark:bg-red-900/20 rounded-t-sm relative" style="height: 40%">
+<div class="absolute -top-1 left-1/2 -translate-x-1/2 size-1.5 bg-red-500 rounded-full"></div>
+</div>
+<span class="text-[8px] text-slate-400">05/20</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1">
+<div class="w-full bg-red-100 dark:bg-red-900/20 rounded-t-sm relative" style="height: 65%">
+<div class="absolute -top-1 left-1/2 -translate-x-1/2 size-1.5 bg-red-500 rounded-full"></div>
+</div>
+<span class="text-[8px] text-slate-400">05/21</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1">
+<div class="w-full bg-red-100 dark:bg-red-900/20 rounded-t-sm relative" style="height: 30%">
+<div class="absolute -top-1 left-1/2 -translate-x-1/2 size-1.5 bg-red-500 rounded-full"></div>
+</div>
+<span class="text-[8px] text-slate-400">05/22</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1">
+<div class="w-full bg-red-100 dark:bg-red-900/20 rounded-t-sm relative" style="height: 85%">
+<div class="absolute -top-1 left-1/2 -translate-x-1/2 size-1.5 bg-red-500 rounded-full"></div>
+</div>
+<span class="text-[8px] text-slate-400">05/23</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1">
+<div class="w-full bg-red-100 dark:bg-red-900/20 rounded-t-sm relative" style="height: 50%">
+<div class="absolute -top-1 left-1/2 -translate-x-1/2 size-1.5 bg-red-500 rounded-full"></div>
+</div>
+<span class="text-[8px] text-slate-400">05/24</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1">
+<div class="w-full bg-red-500 rounded-t-sm relative" style="height: 95%">
+<div class="absolute -top-1 left-1/2 -translate-x-1/2 size-1.5 bg-red-600 rounded-full"></div>
+</div>
+<span class="text-[8px] font-bold text-red-500">今日</span>
+</div>
+</div>
+</div>
+<div class="pt-4 border-t border-slate-50 dark:border-slate-800">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-sm font-bold flex items-center gap-2">
+<span class="size-2 rounded-full bg-orange-500"></span>
+                        驳回原因分布
+                    </h2>
+</div>
+<div class="flex items-center gap-8">
+<div class="relative size-20 flex-shrink-0">
+<svg class="size-full transform -rotate-90" viewBox="0 0 36 36">
+<circle cx="18" cy="18" fill="transparent" r="16" stroke="#f1f5f9" stroke-width="4"></circle>
+<circle cx="18" cy="18" fill="transparent" r="16" stroke="#f59e0b" stroke-dasharray="70 100" stroke-width="4"></circle>
+<circle cx="18" cy="18" fill="transparent" r="16" stroke="#ef4444" stroke-dasharray="30 100" stroke-dashoffset="-70" stroke-width="4"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-xs font-bold">14</span>
+<span class="text-[8px] text-slate-400">总计</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="size-2 rounded-full bg-orange-500"></span>
+<span class="text-xs text-slate-500">物料不全 (70%)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="size-2 rounded-full bg-red-500"></span>
+<span class="text-xs text-slate-500">质量不符 (30%)</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+<button class="px-3 py-1.5 rounded-full bg-primary text-white text-xs font-medium whitespace-nowrap">全部异常</button>
+<button class="px-3 py-1.5 rounded-full bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-xs font-medium whitespace-nowrap">仅超时</button>
+<button class="px-3 py-1.5 rounded-full bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-xs font-medium whitespace-nowrap">仅驳回</button>
+<button class="px-3 py-1.5 rounded-full bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-xs font-medium whitespace-nowrap">按成员</button>
+</div>
+<section class="flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<h2 class="text-sm font-bold text-slate-900 dark:text-white">异常记录明细</h2>
+<span class="text-[10px] text-slate-400">共 8 条异常</span>
+</div>
+<div class="p-4 rounded-2xl bg-surface-light dark:bg-surface-dark border-l-4 border-l-red-500 border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-sm font-bold text-slate-900 dark:text-white mb-0.5">A区高压配电柜巡检</h3>
+<div class="flex items-center gap-2">
+<span class="text-[10px] px-1.5 py-0.5 bg-red-50 dark:bg-red-900/20 text-red-600 font-bold rounded">任务超时</span>
+<span class="text-[10px] text-slate-400">10:45 AM</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCVxcv5rE7bPWvJHB-N0lSWNqr11mcLlNUTU2s76bSGxbwk2-1VVsqS5g1XfABHJBesDOZR_I8NN9f1pT-Z9K7Vm7zRaNlFXiCUAiLIjxKqroCRRQjOlXQ_foi56zhSjo8AZYf97FHmUUqLVNDW-aQX0LBPygwFXBrH2b3IvgIzg4lywnf-z_aOzjFFYE9qikC40J7mF6hWhXREDLL8rTAhJijuHmAmuLr4upczwhb_q8YsozGtvnwDquD2icbLuX66yDkTfXIlBHk");'></div>
+<span class="text-xs font-medium text-slate-700 dark:text-slate-300">Michael B.</span>
+</div>
+</div>
+<div class="flex items-center justify-between bg-slate-50 dark:bg-slate-800/50 p-2 rounded-lg">
+<span class="text-xs text-slate-500 italic">持续时长</span>
+<span class="text-xs font-bold text-red-600">32 分钟</span>
+</div>
+</div>
+<div class="p-4 rounded-2xl bg-surface-light dark:bg-surface-dark border-l-4 border-l-orange-500 border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-sm font-bold text-slate-900 dark:text-white mb-0.5">物料入库核验</h3>
+<div class="flex items-center gap-2">
+<span class="text-[10px] px-1.5 py-0.5 bg-orange-50 dark:bg-orange-900/20 text-orange-600 font-bold rounded">任务被驳回</span>
+<span class="text-[10px] text-slate-400">09:15 AM</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA_3akt4pBE2Mma8dD_tiEytpnCMDG-SheizPG9bWt6A8uGtVSXYkT1KXbMQALEegBP7ME1YZWDPtH7OAy9Uh_Kvu36b5RWqPmy5Pj0cSSwU3lSo3AiRXHq6EmGthG8AmH3z-NzeKeHuj007ncxIrh5ug3pxaxPoBWm62x82p5gElNcoPRi9rKYa21c9YY5U-u0PsQXS9Lz4YmtWfo-SB1iEz5iAZiaqum5wei7YVjtm7mRUhVMtSXDo2h41jC1fIcFQ_A9o7zXmWM");'></div>
+<span class="text-xs font-medium text-slate-700 dark:text-slate-300">Alex Chen</span>
+</div>
+</div>
+<div class="flex flex-col gap-1 bg-slate-50 dark:bg-slate-800/50 p-2 rounded-lg">
+<span class="text-[10px] text-slate-400 uppercase font-bold">驳回原因</span>
+<p class="text-xs text-slate-700 dark:text-slate-200">上传的物料照片模糊，无法确认编码，请重新拍摄上传。</p>
+</div>
+</div>
+<div class="p-4 rounded-2xl bg-surface-light dark:bg-surface-dark border-l-4 border-l-red-500 border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-sm font-bold text-slate-900 dark:text-white mb-0.5">B区传送带保养</h3>
+<div class="flex items-center gap-2">
+<span class="text-[10px] px-1.5 py-0.5 bg-red-50 dark:bg-red-900/20 text-red-600 font-bold rounded">任务超时</span>
+<span class="text-[10px] text-slate-400">昨天 17:30</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAxEL98FwKlnSzqqsGoGpSBznLGkeU70HBtvTRXBo-cR-wSAbeR_swMJnnLhRz8_miKuMGpOrTnMhf3R4K0VHJ0ZH657hCjyxiOCCvcISVV9XbfdzUjrAVs9XxS7mhotemjbiCD40IoKrIuVUvM8pig5ueU8QaoX1yXECE6ARSO1CShLCB8-fgthfa-IwR6S3_w6haUPU4aSk84XN7nFCp57aDkycNzAuaPtfkot8tJ5aBzdoiuqpgkHlwg44TOsWNAjocNiiOqkOI");'></div>
+<span class="text-xs font-medium text-slate-700 dark:text-slate-300">Sarah Jones</span>
+</div>
+</div>
+<div class="flex items-center justify-between bg-slate-50 dark:bg-slate-800/50 p-2 rounded-lg">
+<span class="text-xs text-slate-500 italic">持续时长</span>
+<span class="text-xs font-bold text-red-600">18 分钟</span>
+</div>
+</div>
+</section>
+</main>
+<nav class="fixed bottom-0 left-0 w-full bg-surface-light dark:bg-surface-dark border-t border-slate-200 dark:border-slate-800 px-6 py-3 pb-8 z-40">
+<ul class="flex justify-between items-center">
+<li>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-medium">首页</span>
+</a>
+</li>
+<li>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined filled">assignment</span>
+<span class="text-[10px] font-bold">任务</span>
+</a>
+</li>
+<li class="-mt-8">
+<button class="size-14 rounded-full bg-primary text-white shadow-lg shadow-primary/30 flex items-center justify-center transform active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</li>
+<li>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-[10px] font-medium">团队</span>
+</a>
+</li>
+<li>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium">个人</span>
+</a>
+</li>
+</ul>
+</nav>
+
+</body></html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html class="light" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>班组长工作台 - 个人中心</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00b2b2",
+                        "background-light": "#fafafa",
+                        "background-dark": "#17191c",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#23262a",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+        .material-symbols-outlined.filled {
+          font-variation-settings: 'FILL' 1;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden pb-24">
+<header class="sticky top-0 z-30 bg-surface-light/90 dark:bg-surface-dark/90 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 px-4 py-3 flex items-center justify-between">
+<h1 class="text-lg font-bold text-slate-900 dark:text-white leading-tight">个人中心</h1>
+<button class="relative p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-300">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border border-white dark:border-surface-dark"></span>
+</button>
+</header>
+<main class="flex flex-col gap-6 p-4">
+<section class="flex flex-col items-center pt-2 pb-2">
+<div class="relative group cursor-pointer">
+<div class="size-24 rounded-full bg-cover bg-center border-4 border-white dark:border-surface-dark shadow-lg" data-alt="Portrait of a male supervisor smiling" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC9ni5JPq3Fb1n-ptGOUQvLTCsMEpWa_6qmrKpKzp2xGH4UjwY-PdXXgVjVfnGpN9G-FcIvR1xa7r1u844NKBS7Xwm-El5weCJJ17pOvU3rY92H1PKfbr1T99Xs4GcVBfjXl-7cx-A3DcJtxCzfHCOmWh4zWOodeDH4Z3szYWSEJQZHLmPWyLJgNhwW9BxmSQzSPM0hYsCNln4N0afZjSIxgpT82HoSEdW0GjB0PgXs3MhAIIQhZEiuos2EirWctQp6aINfjh1tFbA");'></div>
+<div class="absolute bottom-1 right-1 size-6 bg-green-500 rounded-full border-2 border-white dark:border-surface-dark flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px] text-white">verified</span>
+</div>
+</div>
+<h2 class="text-xl font-bold text-slate-900 dark:text-white mt-4">Alex Chen</h2>
+<div class="flex items-center gap-2 mt-1.5">
+<span class="text-sm text-slate-500 dark:text-slate-400">班组长 · A区电工组</span>
+<span class="px-2 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-bold tracking-wide">#8201</span>
+</div>
+</section>
+<section class="grid grid-cols-3 gap-3">
+<div class="p-4 rounded-2xl bg-surface-light dark:bg-surface-dark border border-slate-100 dark:border-slate-800 flex flex-col items-center gap-1 shadow-sm">
+<span class="text-2xl font-bold text-slate-900 dark:text-white">26</span>
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">本月出勤</span>
+</div>
+<div class="p-4 rounded-2xl bg-surface-light dark:bg-surface-dark border border-slate-100 dark:border-slate-800 flex flex-col items-center gap-1 shadow-sm">
+<span class="text-2xl font-bold text-slate-900 dark:text-white">142</span>
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">工时统计</span>
+</div>
+<div class="p-4 rounded-2xl bg-surface-light dark:bg-surface-dark border border-slate-100 dark:border-slate-800 flex flex-col items-center gap-1 shadow-sm">
+<span class="text-2xl font-bold text-slate-900 dark:text-white">100%</span>
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">绩效评分</span>
+</div>
+</section>
+<section class="flex flex-col gap-3">
+<h3 class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider ml-1">业务功能</h3>
+<div class="bg-surface-light dark:bg-surface-dark rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col">
+<button class="w-full flex items-center justify-between p-4 border-b border-slate-50 dark:border-slate-800/50 last:border-0 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">calendar_month</span>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">考勤统计</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-lg">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between p-4 border-b border-slate-50 dark:border-slate-800/50 last:border-0 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">history</span>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">打卡记录</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-lg">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between p-4 border-b border-slate-50 dark:border-slate-800/50 last:border-0 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">fact_check</span>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">我的审批</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="size-2 rounded-full bg-red-500"></span>
+<span class="material-symbols-outlined text-slate-400 text-lg">chevron_right</span>
+</div>
+</button>
+</div>
+</section>
+<section class="flex flex-col gap-3">
+<h3 class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider ml-1">其他</h3>
+<div class="bg-surface-light dark:bg-surface-dark rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col">
+<button class="w-full flex items-center justify-between p-4 border-b border-slate-50 dark:border-slate-800/50 last:border-0 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">settings</span>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">系统设置</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-lg">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between p-4 border-b border-slate-50 dark:border-slate-800/50 last:border-0 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">help</span>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">帮助与反馈</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-lg">chevron_right</span>
+</button>
+</div>
+</section>
+<button class="w-full py-3.5 rounded-xl border border-slate-200 dark:border-slate-700 text-red-500 dark:text-red-400 font-semibold hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors mb-4 text-sm">
+            退出登录
+        </button>
+</main>
+<nav class="fixed bottom-0 left-0 w-full bg-surface-light dark:bg-surface-dark border-t border-slate-200 dark:border-slate-800 px-6 py-3 pb-6 z-40">
+<ul class="flex justify-between items-center">
+<li>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-medium">首页</span>
+</a>
+</li>
+<li>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="text-[10px] font-medium">任务</span>
+</a>
+</li>
+<li class="-mt-8">
+<button class="size-14 rounded-full bg-primary text-white shadow-lg shadow-primary/30 flex items-center justify-center transform active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</li>
+<li>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-[10px] font-medium">团队</span>
+</a>
+</li>
+<li>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined filled">person</span>
+<span class="text-[10px] font-bold">个人</span>
+</a>
+</li>
+</ul>
+</nav>
+
+</body></html>

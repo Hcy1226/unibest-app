@@ -1,0 +1,263 @@
+<html class="light" lang="zh-CN"><head><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden pb-28">```html
+
+
+
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>班组长综合管理工作台</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00b2b2",
+                        "background-light": "#fafafa",
+                        "background-dark": "#17191c",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#23262a",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body {
+            min-height: 100dvh;
+        }
+        .material-symbols-outlined.filled {
+          font-variation-settings: 'FILL' 1;
+        }
+    </style>
+<style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+
+
+<header class="sticky top-0 z-30 bg-surface-light/90 dark:bg-surface-dark/90 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 px-4 py-3 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="relative group cursor-pointer">
+<div class="size-10 rounded-full bg-cover bg-center border-2 border-primary" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC9ni5JPq3Fb1n-ptGOUQvLTCsMEpWa_6qmrKpKzp2xGH4UjwY-PdXXgVjVfnGpN9G-FcIvR1xa7r1u844NKBS7Xwm-El5weCJJ17pOvU3rY92H1PKfbr1T99Xs4GcVBfjXl-7cx-A3DcJtxCzfHCOmWh4zWOodeDH4Z3szYWSEJQZHLmPWyLJgNhwW9BxmSQzSPM0hYsCNln4N0afZjSIxgpT82HoSEdW0GjB0PgXs3MhAIIQhZEiuos2EirWctQp6aINfjh1tFbA");'></div>
+<div class="absolute bottom-0 right-0 size-3 bg-green-500 rounded-full border-2 border-white dark:border-surface-dark"></div>
+</div>
+<div>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400">综合管理工作台</p>
+<h1 class="text-base font-bold text-slate-900 dark:text-white leading-tight">班组长 Alex</h1>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-300">search</span>
+</button>
+<button class="relative p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-300">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border border-white dark:border-surface-dark"></span>
+</button>
+</div>
+</header>
+<main class="flex flex-col gap-6 p-4">
+<section>
+<div class="grid grid-cols-3 gap-3">
+<div class="p-3 rounded-2xl bg-surface-light dark:bg-surface-dark border border-slate-100 dark:border-slate-800 flex flex-col items-center gap-1 shadow-sm">
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-tight">总人数</span>
+<span class="text-xl font-bold text-slate-900 dark:text-white">12</span>
+</div>
+<div class="p-3 rounded-2xl bg-green-50 dark:bg-green-900/10 border border-green-100 dark:border-green-900/20 flex flex-col items-center gap-1 shadow-sm">
+<span class="text-[10px] font-bold text-green-600 dark:text-green-400 uppercase tracking-tight">在岗</span>
+<span class="text-xl font-bold text-green-700 dark:text-green-300">8</span>
+</div>
+<div class="p-3 rounded-2xl bg-slate-100/50 dark:bg-slate-800/50 border border-slate-200/50 dark:border-slate-700/50 flex flex-col items-center gap-1 shadow-sm">
+<span class="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-tight">离岗</span>
+<span class="text-xl font-bold text-slate-600 dark:text-slate-300">4</span>
+</div>
+</div>
+</section>
+<section class="flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h2 class="text-lg font-bold text-slate-900 dark:text-white">成员实时动态</h2>
+<div class="flex gap-2">
+<span class="px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-[10px] text-slate-500">按进度排序</span>
+</div>
+</div>
+<div class="flex flex-col p-4 rounded-2xl bg-surface-light dark:bg-surface-dark border border-slate-100 dark:border-slate-800 shadow-sm gap-3">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="size-12 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA_3akt4pBE2Mma8dD_tiEytpnCMDG-SheizPG9bWt6A8uGtVSXYkT1KXbMQALEegBP7ME1YZWDPtH7OAy9Uh_Kvu36b5RWqPmy5Pj0cSSwU3lSo3AiRXHq6EmGthG8AmH3z-NzeKeHuj007ncxIrh5ug3pxaxPoBWm62x82p5gElNcoPRi9rKYa21c9YY5U-u0PsQXS9Lz4YmtWfo-SB1iEz5iAZiaqum5wei7YVjtm7mRUhVMtSXDo2h41jC1fIcFQ_A9o7zXmWM");'></div>
+<span class="absolute bottom-0 right-0 size-3 rounded-full bg-green-500 border-2 border-white dark:border-surface-dark"></span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-bold text-slate-900 dark:text-white">Alex Chen</h3>
+<span class="px-1.5 py-0.5 rounded bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 text-[10px] font-bold">在岗</span>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">工号: #8201 · A区电工组</p>
+</div>
+</div>
+<button class="size-9 rounded-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">call</span>
+</button>
+</div>
+<div class="bg-slate-50 dark:bg-slate-800/40 rounded-xl px-3 py-2.5">
+<div class="flex justify-between items-center mb-1.5">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary">running_with_errors</span>
+<span class="text-xs font-bold text-slate-700 dark:text-slate-200">A区设备巡检</span>
+</div>
+<span class="text-[10px] font-bold text-primary">65%</span>
+</div>
+<div class="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 65%"></div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-slate-50 dark:border-slate-800/50">
+<div class="flex flex-col">
+<span class="text-[10px] text-slate-400 uppercase tracking-wider font-bold">打卡状态</span>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-400">08:24 (已打卡)</span>
+</div>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 transition-colors text-xs font-semibold">
+<span class="material-symbols-outlined text-[16px]">edit_calendar</span>
+                        代打卡
+                    </button>
+</div>
+</div>
+<div class="flex flex-col p-4 rounded-2xl bg-surface-light dark:bg-surface-dark border-2 border-red-100 dark:border-red-900/30 shadow-sm gap-3">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="size-12 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCVxcv5rE7bPWvJHB-N0lSWNqr11mcLlNUTU2s76bSGxbwk2-1VVsqS5g1XfABHJBesDOZR_I8NN9f1pT-Z9K7Vm7zRaNlFXiCUAiLIjxKqroCRRQjOlXQ_foi56zhSjo8AZYf97FHmUUqLVNDW-aQX0LBPygwFXBrH2b3IvgIzg4lywnf-z_aOzjFFYE9qikC40J7mF6hWhXREDLL8rTAhJijuHmAmuLr4upczwhb_q8YsozGtvnwDquD2icbLuX66yDkTfXIlBHk");'></div>
+<span class="absolute bottom-0 right-0 size-3 rounded-full bg-green-500 border-2 border-white dark:border-surface-dark"></span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-bold text-slate-900 dark:text-white">Michael B.</h3>
+<span class="px-1.5 py-0.5 rounded bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 text-[10px] font-bold">在岗</span>
+<span class="px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-[10px] font-bold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[10px] filled">error</span>超时
+                                </span>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">工号: #8211 · 机动组</p>
+</div>
+</div>
+<button class="size-9 rounded-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-400">
+<span class="material-symbols-outlined text-[20px]">call</span>
+</button>
+</div>
+<div class="bg-red-50/50 dark:bg-red-900/10 rounded-xl px-3 py-2.5">
+<div class="flex justify-between items-center mb-1.5">
+<div class="flex items-center gap-1.5 text-red-600 dark:text-red-400">
+<span class="material-symbols-outlined text-[16px]">history</span>
+<span class="text-xs font-bold">物料搬运(紧急)</span>
+</div>
+<span class="text-[10px] font-bold">80%</span>
+</div>
+<div class="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-red-500 rounded-full" style="width: 80%"></div>
+</div>
+<p class="text-[10px] text-red-500 mt-1.5 font-medium italic">任务已超时 15 分钟</p>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-slate-50 dark:border-slate-800/50">
+<div class="flex flex-col">
+<span class="text-[10px] text-slate-400 uppercase tracking-wider font-bold">打卡状态</span>
+<span class="text-xs font-medium text-slate-600">08:15 (正常)</span>
+</div>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-primary text-primary hover:bg-primary/5 transition-colors text-xs font-semibold">
+<span class="material-symbols-outlined text-[16px]">edit_calendar</span>
+                        代打卡
+                    </button>
+</div>
+</div>
+<div class="flex flex-col p-4 rounded-2xl bg-surface-light dark:bg-surface-dark border border-slate-100 dark:border-slate-800 shadow-sm gap-3 opacity-80">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="size-12 rounded-full bg-cover bg-center grayscale" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAxEL98FwKlnSzqqsGoGpSBznLGkeU70HBtvTRXBo-cR-wSAbeR_swMJnnLhRz8_miKuMGpOrTnMhf3R4K0VHJ0ZH657hCjyxiOCCvcISVV9XbfdzUjrAVs9XxS7mhotemjbiCD40IoKrIuVUvM8pig5ueU8QaoX1yXECE6ARSO1CShLCB8-fgthfa-IwR6S3_w6haUPU4aSk84XN7nFCp57aDkycNzAuaPtfkot8tJ5aBzdoiuqpgkHlwg44TOsWNAjocNiiOqkOI");'></div>
+<span class="absolute bottom-0 right-0 size-3 rounded-full bg-slate-300 border-2 border-white dark:border-surface-dark"></span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-bold text-slate-500 dark:text-slate-400">Sarah Jones</h3>
+<span class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 text-[10px] font-bold">离岗</span>
+</div>
+<p class="text-xs text-slate-400 mt-0.5">工号: #8205 · B区安全员</p>
+</div>
+</div>
+<button class="size-9 rounded-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-400">
+<span class="material-symbols-outlined text-[20px]">call</span>
+</button>
+</div>
+<div class="bg-slate-100/50 dark:bg-slate-800/30 rounded-xl px-3 py-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-slate-400">event_busy</span>
+<p class="text-xs text-slate-400 font-medium italic">暂无执行中任务</p>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-slate-50 dark:border-slate-800/50">
+<div class="flex flex-col">
+<span class="text-[10px] text-slate-400 uppercase tracking-wider font-bold">状态更新</span>
+<span class="text-xs font-medium text-slate-500">昨日 18:00</span>
+</div>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary text-white shadow-sm shadow-primary/30 text-xs font-semibold">
+<span class="material-symbols-outlined text-[16px]">fingerprint</span>
+                        代打卡
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<nav class="fixed bottom-0 left-0 w-full bg-surface-light dark:bg-surface-dark border-t border-slate-200 dark:border-slate-800 px-6 py-3 pb-8 z-40">
+<ul class="flex justify-between items-center">
+<li>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-medium">首页</span>
+</a>
+</li>
+<li>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="text-[10px] font-medium">任务</span>
+</a>
+</li>
+<li class="-mt-8">
+<button class="size-14 rounded-full bg-primary text-white shadow-lg shadow-primary/30 flex items-center justify-center transform active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</li>
+<li>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined filled">groups</span>
+<span class="text-[10px] font-bold">团队</span>
+</a>
+</li>
+<li>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium">个人</span>
+</a>
+</li>
+</ul>
+</nav>
+
+</body></html>

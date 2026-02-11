@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html class="light" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>员工端 - 个人中心</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00b2b2",
+                        "background-light": "#fafafa",
+                        "background-dark": "#17191c",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#23262a",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+        .material-symbols-outlined.filled {
+          font-variation-settings: 'FILL' 1;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden pb-24">
+<header class="relative bg-surface-light dark:bg-surface-dark px-6 pt-12 pb-6 rounded-b-[2rem] shadow-sm overflow-hidden mb-6">
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
+<div class="absolute top-10 left-0 w-32 h-32 bg-blue-500/5 rounded-full -translate-x-1/2 blur-2xl"></div>
+<div class="relative z-10 flex flex-col items-center gap-4">
+<div class="relative group">
+<div class="size-24 rounded-full bg-cover bg-center border-4 border-white dark:border-surface-dark shadow-md" data-alt="Portrait of employee" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA_3akt4pBE2Mma8dD_tiEytpnCMDG-SheizPG9bWt6A8uGtVSXYkT1KXbMQALEegBP7ME1YZWDPtH7OAy9Uh_Kvu36b5RWqPmy5Pj0cSSwU3lSo3AiRXHq6EmGthG8AmH3z-NzeKeHuj007ncxIrh5ug3pxaxPoBWm62x82p5gElNcoPRi9rKYa21c9YY5U-u0PsQXS9Lz4YmtWfo-SB1iEz5iAZiaqum5wei7YVjtm7mRUhVMtSXDo2h41jC1fIcFQ_A9o7zXmWM");'></div>
+<div class="absolute bottom-1 right-1 size-5 bg-green-500 rounded-full border-4 border-white dark:border-surface-dark"></div>
+</div>
+<div class="text-center">
+<h1 class="text-xl font-bold text-slate-900 dark:text-white">Alex Chen</h1>
+<p class="text-sm text-slate-500 dark:text-slate-400 mt-1">A区电工组 · 高级技工</p>
+<div class="mt-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+<span class="text-xs font-medium text-slate-600 dark:text-slate-300 tracking-wider">ID: 8201</span>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[14px]">content_copy</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<main class="flex flex-col gap-6 px-4">
+<section class="bg-surface-light dark:bg-surface-dark rounded-2xl p-5 shadow-sm border border-slate-100 dark:border-slate-800">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[22px]">qr_code_2</span>
+                    员工身份码
+                </h2>
+<span class="text-xs text-slate-400">点击放大</span>
+</div>
+<div class="flex flex-col items-center justify-center gap-3 py-2">
+<div class="bg-white p-3 rounded-xl border border-slate-100 shadow-sm">
+<div class="w-32 h-32 bg-slate-900 flex flex-wrap content-center justify-center p-1 relative overflow-hidden">
+<div class="absolute inset-0 bg-white opacity-10" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, #000 5px, #000 10px);"></div>
+<div class="w-[90%] h-[90%] border-4 border-white flex items-center justify-center relative z-10">
+<div class="w-8 h-8 bg-white absolute top-0 left-0"></div>
+<div class="w-8 h-8 bg-white absolute top-0 right-0"></div>
+<div class="w-8 h-8 bg-white absolute bottom-0 left-0"></div>
+<div class="w-6 h-6 bg-primary absolute top-1 left-1"></div>
+<div class="w-6 h-6 bg-primary absolute top-1 right-1"></div>
+<div class="w-6 h-6 bg-primary absolute bottom-1 left-1"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-3xl">bolt</span>
+</div>
+</div>
+</div>
+</div>
+<p class="text-xs text-slate-500 text-center px-4 leading-relaxed">请向考勤机或班组长出示此二维码进行身份核验</p>
+</div>
+</section>
+<section class="grid grid-cols-2 gap-3">
+<a class="p-4 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-100 dark:border-blue-800/30 flex flex-col justify-between h-32 relative overflow-hidden group" href="#">
+<div class="absolute right-0 top-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-blue-600">calendar_month</span>
+</div>
+<div class="size-10 rounded-full bg-blue-100 dark:bg-blue-800 flex items-center justify-center text-blue-600 dark:text-blue-200 mb-2">
+<span class="material-symbols-outlined">calendar_month</span>
+</div>
+<div>
+<h3 class="font-bold text-slate-900 dark:text-white">考勤日历</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">查看排班与打卡记录</p>
+</div>
+</a>
+<a class="p-4 rounded-2xl bg-gradient-to-br from-orange-50 to-amber-50 dark:from-orange-900/20 dark:to-amber-900/20 border border-orange-100 dark:border-orange-800/30 flex flex-col justify-between h-32 relative overflow-hidden group" href="#">
+<div class="absolute right-0 top-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-orange-600">notifications</span>
+</div>
+<div class="size-10 rounded-full bg-orange-100 dark:bg-orange-800 flex items-center justify-center text-orange-600 dark:text-orange-200 mb-2 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 size-2.5 bg-red-500 rounded-full border-2 border-orange-50 dark:border-orange-900"></span>
+</div>
+<div>
+<h3 class="font-bold text-slate-900 dark:text-white">我的消息</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">3条新通知待处理</p>
+</div>
+</a>
+</section>
+<section class="bg-surface-light dark:bg-surface-dark rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden">
+<div class="flex flex-col divide-y divide-slate-100 dark:divide-slate-800">
+<a class="flex items-center justify-between p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors" href="#">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-full bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+</div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">工资单</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-[20px]">chevron_right</span>
+</a>
+<a class="flex items-center justify-between p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors" href="#">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-full bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center text-purple-600 dark:text-purple-400">
+<span class="material-symbols-outlined text-[20px]">school</span>
+</div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">培训记录</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-[20px]">chevron_right</span>
+</a>
+<a class="flex items-center justify-between p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors" href="#">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-full bg-sky-50 dark:bg-sky-900/20 flex items-center justify-center text-sky-600 dark:text-sky-400">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">系统设置</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-[20px]">chevron_right</span>
+</a>
+</div>
+</section>
+<button class="w-full py-3.5 rounded-xl border border-red-100 dark:border-red-900/30 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 font-medium text-sm transition-colors mt-2 mb-6">
+            退出登录
+        </button>
+</main>
+<nav class="fixed bottom-0 left-0 w-full bg-surface-light dark:bg-surface-dark border-t border-slate-200 dark:border-slate-800 px-6 py-3 pb-6 z-40">
+<ul class="flex justify-between items-center">
+<li>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="text-[10px] font-medium">任务</span>
+</a>
+</li>
+<li>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="text-[10px] font-medium">历史</span>
+</a>
+</li>
+<li>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+<span class="text-[10px] font-medium">统计</span>
+</a>
+</li>
+<li>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined filled">person</span>
+<span class="text-[10px] font-bold">个人</span>
+</a>
+</li>
+</ul>
+</nav>
+
+</body></html>

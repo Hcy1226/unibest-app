@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html class="light" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>任务整改详情页</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00b2b2",
+                        "background-light": "#f6f8fa",
+                        "background-dark": "#17191c",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#23262a",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        body { min-height: 100dvh; }
+        .material-symbols-outlined.filled { font-variation-settings: 'FILL' 1; }
+        .ios-shadow { box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden pb-32">
+<header class="sticky top-0 z-30 bg-surface-light/90 dark:bg-surface-dark/90 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 px-4 py-3 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<button class="p-1 -ml-1">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-300">arrow_back_ios_new</span>
+</button>
+<div>
+<h1 class="text-base font-bold text-slate-900 dark:text-white leading-tight">任务整改详情</h1>
+<p class="text-[10px] font-medium text-slate-500 dark:text-slate-400">单号：RE-2023102409</p>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-300 text-xl">share</span>
+</button>
+</div>
+</header>
+<main class="flex flex-col gap-4 p-4">
+<section class="p-4 rounded-2xl bg-surface-light dark:bg-surface-dark border border-slate-100 dark:border-slate-800 ios-shadow">
+<div class="flex items-start justify-between mb-3">
+<div>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400 mb-2 inline-block">待整改</span>
+<h2 class="text-lg font-bold text-slate-900 dark:text-white">B2设备维修</h2>
+</div>
+<div class="text-right">
+<p class="text-[10px] text-slate-400">截止日期</p>
+<p class="text-xs font-medium text-red-500">今天 18:00</p>
+</div>
+</div>
+<div class="flex items-center gap-4 text-xs text-slate-500 dark:text-slate-400">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">location_on</span>
+                南区二楼
+            </div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">person</span>
+                指派人：王主管
+            </div>
+</div>
+</section>
+<section class="p-4 rounded-2xl bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/30">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-red-500">error</span>
+<h3 class="font-bold text-slate-900 dark:text-white text-sm">驳回原因说明</h3>
+</div>
+<div class="bg-white/60 dark:bg-black/20 p-3 rounded-xl mb-3">
+<p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed italic">
+                “现场照片不清晰，未能看清B2设备铭牌及维修后的封签位置，请重新拍摄并确保水印信息准确。”
+            </p>
+</div>
+<button class="w-full flex items-center justify-between px-4 py-3 bg-white dark:bg-surface-dark rounded-xl border border-red-200 dark:border-red-800 shadow-sm active:scale-[0.98] transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">play_circle</span>
+<div class="flex items-center gap-1">
+<div class="w-1 h-3 bg-primary/40 rounded-full"></div>
+<div class="w-1 h-5 bg-primary rounded-full"></div>
+<div class="w-1 h-2 bg-primary/30 rounded-full"></div>
+<div class="w-1 h-4 bg-primary/60 rounded-full"></div>
+</div>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-300">语音说明 08"</span>
+</div>
+<span class="text-[10px] font-bold text-primary">点击播放</span>
+</button>
+</section>
+<section class="p-4 rounded-2xl bg-surface-light dark:bg-surface-dark border border-slate-100 dark:border-slate-800 ios-shadow">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">photo_camera</span>
+<h3 class="font-bold text-slate-900 dark:text-white text-sm">整改证据上传</h3>
+</div>
+<span class="text-[10px] text-slate-400">需强制水印</span>
+</div>
+<div class="grid grid-cols-3 gap-3">
+<div class="aspect-square rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center gap-1 bg-slate-50 dark:bg-slate-800/50 active:bg-slate-100 transition-colors">
+<span class="material-symbols-outlined text-slate-400">add_a_photo</span>
+<span class="text-[10px] text-slate-400">拍摄照片</span>
+</div>
+<div class="aspect-square rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center gap-1 bg-slate-50 dark:bg-slate-800/50">
+<span class="material-symbols-outlined text-slate-400">videocam</span>
+<span class="text-[10px] text-slate-400">拍摄视频</span>
+</div>
+<div class="aspect-square rounded-xl bg-slate-100 dark:bg-slate-800 relative overflow-hidden group">
+<img alt="Sample" class="w-full h-full object-cover opacity-60" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD22krWaJ4LO4LhtSENuPYZPIBQkE7APH4PXr3AayI47rSQFrG7vpaMM7E7CZXOTKKDsqxt0n8duYC9-xj4J5T7bAbL8jnmeoQqvCagUocGFW-qfIjMVJNjskL397KCj7xJWOmczlxI2TorFz0F9S5BzleGi_AkaVAHstpi0TyqxDcI9LKJPo9zdjAIL6vUwYotr0bmcIlS27kymb6ycRORXT5rhr2_49eszgTooAYTuY4KEUMcxgp9OuiaReCi-VP5OG47WP3PsJQ"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-xl">check_circle</span>
+</div>
+<div class="absolute bottom-1 left-1 bg-black/50 px-1 rounded">
+<p class="text-[8px] text-white leading-none">2023.10.25 14:20</p>
+</div>
+<button class="absolute top-1 right-1 size-5 bg-red-500 rounded-full flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-xs">close</span>
+</button>
+</div>
+</div>
+<p class="mt-3 text-[10px] text-slate-400 flex items-start gap-1">
+<span class="material-symbols-outlined text-[12px] mt-0.5">info</span>
+            拍摄将自动记录时间、经纬度、地点及执行人信息作为防篡改水印。
+        </p>
+</section>
+<section class="p-4 rounded-2xl bg-surface-light dark:bg-surface-dark border border-slate-100 dark:border-slate-800 ios-shadow">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">description</span>
+<h3 class="font-bold text-slate-900 dark:text-white text-sm">整改方案描述</h3>
+</div>
+<button class="flex items-center gap-1 text-primary text-xs font-bold px-2 py-1 rounded-lg bg-primary/10">
+<span class="material-symbols-outlined text-sm">mic</span>
+                语音转文字
+            </button>
+</div>
+<div class="relative">
+<textarea class="w-full h-32 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border-none focus:ring-2 focus:ring-primary/20 text-sm text-slate-700 dark:text-slate-300 placeholder:text-slate-400" placeholder="请详细描述针对驳回原因所做的整改措施..."></textarea>
+<div class="absolute bottom-3 right-3 text-[10px] text-slate-400">
+                0/500
+            </div>
+</div>
+</section>
+<div class="h-4"></div>
+</main>
+<div class="fixed bottom-0 left-0 w-full bg-surface-light dark:bg-surface-dark border-t border-slate-200 dark:border-slate-800 px-6 py-4 pb-10 z-50">
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 rounded-2xl shadow-lg shadow-primary/30 flex items-center justify-center gap-2 transition-transform active:scale-[0.98]">
+<span class="material-symbols-outlined">send</span>
+        提交整改汇报
+    </button>
+</div>
+<nav class="fixed bottom-0 left-0 w-full bg-surface-light/80 dark:bg-surface-dark/80 backdrop-blur-xl border-t border-slate-200 dark:border-slate-800 px-6 py-2 z-40 hidden">
+<ul class="grid grid-cols-4 gap-1">
+<li>
+<a class="flex flex-col items-center gap-1 py-1 text-primary" href="#">
+<span class="material-symbols-outlined filled text-2xl">assignment</span>
+<span class="text-[10px] font-bold">任务</span>
+</a>
+</li>
+<li>
+<a class="flex flex-col items-center gap-1 py-1 text-slate-400" href="#">
+<span class="material-symbols-outlined text-2xl">history</span>
+<span class="text-[10px] font-medium">历史</span>
+</a>
+</li>
+<li>
+<a class="flex flex-col items-center gap-1 py-1 text-slate-400" href="#">
+<span class="material-symbols-outlined text-2xl">bar_chart</span>
+<span class="text-[10px] font-medium">统计</span>
+</a>
+</li>
+<li>
+<a class="flex flex-col items-center gap-1 py-1 text-slate-400" href="#">
+<span class="material-symbols-outlined text-2xl">person</span>
+<span class="text-[10px] font-medium">个人</span>
+</a>
+</li>
+</ul>
+</nav>
+
+</body></html>

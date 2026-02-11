@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html class="light" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>员工端 - 今日任务</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00b2b2",
+                        "primary-dark": "#008f8f",
+                        "background-light": "#fafafa",
+                        "background-dark": "#17191c",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#23262a",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+        .material-symbols-outlined.filled {
+          font-variation-settings: 'FILL' 1;
+        }.fab-shadow {
+            box-shadow: 0 4px 14px 0 rgba(0, 178, 178, 0.39);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden pb-32">
+<header class="sticky top-0 z-30 bg-surface-light/90 dark:bg-surface-dark/90 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 px-4 py-3 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="relative group cursor-pointer">
+<div class="size-10 rounded-full bg-cover bg-center border-2 border-primary" data-alt="User Avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC9ni5JPq3Fb1n-ptGOUQvLTCsMEpWa_6qmrKpKzp2xGH4UjwY-PdXXgVjVfnGpN9G-FcIvR1xa7r1u844NKBS7Xwm-El5weCJJ17pOvU3rY92H1PKfbr1T99Xs4GcVBfjXl-7cx-A3DcJtxCzfHCOmWh4zWOodeDH4Z3szYWSEJQZHLmPWyLJgNhwW9BxmSQzSPM0hYsCNln4N0afZjSIxgpT82HoSEdW0GjB0PgXs3MhAIIQhZEiuos2EirWctQp6aINfjh1tFbA");'></div>
+<div class="absolute bottom-0 right-0 size-3 bg-green-500 rounded-full border-2 border-white dark:border-surface-dark"></div>
+</div>
+<div>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400">下午好,</p>
+<h1 class="text-base font-bold text-slate-900 dark:text-white leading-tight">操作员 Alex</h1>
+</div>
+</div>
+<button class="relative p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-300">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border border-white dark:border-surface-dark"></span>
+</button>
+</header>
+<main class="flex flex-col gap-6 p-4">
+<section>
+<div class="p-5 rounded-2xl bg-gradient-to-br from-primary to-primary-dark text-white shadow-lg shadow-primary/20 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-9xl">task_alt</span>
+</div>
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-primary-100 text-xs font-medium mb-1">今日进度</p>
+<h2 class="text-3xl font-bold">5 <span class="text-base font-normal text-primary-100">/ 8 任务</span></h2>
+</div>
+<div class="flex flex-col items-end">
+<span class="bg-white/20 backdrop-blur-sm px-2 py-1 rounded-lg text-xs font-semibold">进行中: 1</span>
+</div>
+</div>
+<div class="w-full bg-black/20 rounded-full h-2 mb-2">
+<div class="bg-white h-2 rounded-full transition-all duration-500" style="width: 62.5%"></div>
+</div>
+<p class="text-xs text-primary-50">还剩 3 个待办任务，加油！</p>
+</div>
+</div>
+</section>
+<section class="flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                待办清单
+                <span class="bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-xs px-2 py-0.5 rounded-full font-bold">3</span>
+</h2>
+<button class="text-xs font-medium text-slate-500 dark:text-slate-400 flex items-center gap-1 bg-surface-light dark:bg-surface-dark px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[16px]">sort</span>
+                按优先级
+            </button>
+</div>
+<div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+<button class="px-4 py-1.5 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-sm font-medium whitespace-nowrap shadow-sm">
+                全部
+            </button>
+<button class="px-4 py-1.5 rounded-full bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-sm font-medium whitespace-nowrap hover:bg-slate-50 dark:hover:bg-slate-800">
+                高优先级 (1)
+            </button>
+<button class="px-4 py-1.5 rounded-full bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-sm font-medium whitespace-nowrap hover:bg-slate-50 dark:hover:bg-slate-800">
+                普通 (2)
+            </button>
+<button class="px-4 py-1.5 rounded-full bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-sm font-medium whitespace-nowrap hover:bg-slate-50 dark:hover:bg-slate-800">
+                已完成
+            </button>
+</div>
+</section>
+<section class="flex flex-col gap-4">
+<div class="group relative flex flex-col p-5 rounded-2xl bg-surface-light dark:bg-surface-dark border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow">
+<div class="absolute top-5 right-5 flex flex-col items-end gap-2">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-[10px] font-bold uppercase tracking-wide border border-red-100 dark:border-red-900/30">
+<span class="size-1.5 rounded-full bg-red-500 animate-pulse"></span>
+                    紧急 P0
+                </span>
+<span class="text-[10px] text-primary font-bold bg-primary/10 px-1.5 py-0.5 rounded border border-primary/20">进行中</span>
+</div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-1 pr-20">A区-3号压缩机异常排查</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2 mb-4">监测系统显示3号压缩机出口压力波动异常，需立即前往现场检查阀门及管路状况。</p>
+<div class="flex flex-wrap items-center gap-3 mb-5">
+<div class="flex items-center gap-1 text-slate-500 dark:text-slate-400 text-xs font-medium bg-slate-50 dark:bg-slate-800 px-2 py-1 rounded">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+                    A区压缩机房
+                </div>
+<div class="flex items-center gap-1 text-red-500 dark:text-red-400 text-xs font-medium bg-red-50 dark:bg-slate-800 px-2 py-1 rounded">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+                    截止: 10:30
+                </div>
+</div>
+<div class="flex gap-3">
+<button class="flex-1 py-3 rounded-xl bg-primary hover:bg-primary-dark text-white font-semibold shadow-lg shadow-primary/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">edit_document</span>
+                    继续/汇报
+                </button>
+</div>
+</div>
+<div class="group flex flex-col p-5 rounded-2xl bg-surface-light dark:bg-surface-dark border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">B区-配电箱季度巡检</h3>
+<span class="px-2 py-1 rounded bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 text-[10px] font-bold uppercase tracking-wide border border-orange-100 dark:border-orange-900/30">
+                    P1 重要
+                </span>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2 mb-4">按季度巡检计划对B区1-4号配电箱进行除尘及接线紧固检查。</p>
+<div class="flex flex-wrap items-center gap-3 mb-5">
+<div class="flex items-center gap-1 text-slate-500 dark:text-slate-400 text-xs font-medium bg-slate-50 dark:bg-slate-800 px-2 py-1 rounded">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+                    B区配电室
+                </div>
+<div class="flex items-center gap-1 text-slate-500 dark:text-slate-400 text-xs font-medium bg-slate-50 dark:bg-slate-800 px-2 py-1 rounded">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+                    今日 14:00
+                </div>
+</div>
+<button class="w-full py-3 rounded-xl bg-white dark:bg-surface-dark border-2 border-primary text-primary hover:bg-primary/5 font-semibold active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">play_arrow</span>
+                开始任务
+            </button>
+</div>
+<div class="group flex flex-col p-5 rounded-2xl bg-surface-light dark:bg-surface-dark border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">车间环境安全检查</h3>
+<span class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-[10px] font-bold uppercase tracking-wide border border-slate-200 dark:border-slate-700">
+                    P2 普通
+                </span>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2 mb-4">例行检查车间通道堆放情况及消防设施完好性，填写安全日志。</p>
+<div class="flex flex-wrap items-center gap-3 mb-5">
+<div class="flex items-center gap-1 text-slate-500 dark:text-slate-400 text-xs font-medium bg-slate-50 dark:bg-slate-800 px-2 py-1 rounded">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+                    全厂区
+                </div>
+<div class="flex items-center gap-1 text-slate-500 dark:text-slate-400 text-xs font-medium bg-slate-50 dark:bg-slate-800 px-2 py-1 rounded">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+                    下班前
+                </div>
+</div>
+<button class="w-full py-3 rounded-xl bg-white dark:bg-surface-dark border-2 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 font-semibold active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">play_arrow</span>
+                开始任务
+            </button>
+</div>
+<div class="group flex flex-col p-5 rounded-2xl bg-slate-50 dark:bg-surface-dark/50 border border-slate-100 dark:border-slate-800 shadow-sm opacity-75">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-lg font-bold text-slate-500 dark:text-slate-400 line-through">早班设备交接</h3>
+<span class="px-2 py-1 rounded bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 text-[10px] font-bold uppercase tracking-wide border border-green-200 dark:border-green-900/30 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">check</span>
+                    已完成
+                </span>
+</div>
+<div class="flex items-center gap-1 text-slate-400 text-xs font-medium mt-2">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+                完成于 08:30
+            </div>
+</div>
+</section>
+</main>
+<div class="fixed bottom-24 right-6 z-50">
+<button class="flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-5 py-3.5 rounded-full fab-shadow active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[24px]">photo_camera</span>
+<span class="text-sm font-bold tracking-wide">随手拍/上报</span>
+</button>
+</div>
+<nav class="fixed bottom-0 left-0 w-full bg-surface-light dark:bg-surface-dark border-t border-slate-200 dark:border-slate-800 px-2 pb-6 pt-2 z-40">
+<ul class="grid grid-cols-4 h-full">
+<li>
+<a class="flex flex-col items-center justify-center gap-1 h-full text-primary" href="#">
+<span class="material-symbols-outlined filled">assignment</span>
+<span class="text-[10px] font-bold">任务</span>
+</a>
+</li>
+<li>
+<a class="flex flex-col items-center justify-center gap-1 h-full text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="text-[10px] font-medium">历史</span>
+</a>
+</li>
+<li>
+<a class="flex flex-col items-center justify-center gap-1 h-full text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<span class="text-[10px] font-medium">统计</span>
+</a>
+</li>
+<li>
+<a class="flex flex-col items-center justify-center gap-1 h-full text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium">个人</span>
+</a>
+</li>
+</ul>
+</nav>
+
+</body></html>
