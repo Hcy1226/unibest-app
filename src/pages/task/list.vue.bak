@@ -12,10 +12,12 @@
 <template>
   <view class="bg-[#fafafa] min-h-screen text-slate-900 font-display pb-28">
     <!-- Header -->
+    <!-- Header -->
+    <!-- Header -->
     <view class="fixed top-0 left-0 w-full z-[999] bg-white/95 backdrop-blur-md border-b border-slate-100 px-4 py-3 flex items-center justify-between pt-[calc(env(safe-area-inset-top)+44px)]">
       <view class="flex items-center gap-3">
          <view>
-           <text class="text-xs font-medium text-slate-500 block">工作台</text>
+           <text class="text-xs font-medium text-slate-500 block">工作�?/text>
            <text class="text-base font-bold text-slate-900 block leading-tight">{{ pageTitle }}</text>
          </view>
       </view>
@@ -31,15 +33,15 @@
       <view v-if="isSupervisor">
          <view class="grid grid-cols-3 gap-3">
             <view class="p-3 rounded-xl bg-orange-50 border border-orange-100 flex flex-col items-center gap-1 shadow-sm">
-               <text class="text-xs font-medium text-orange-600">待指派</text>
+               <text class="text-xs font-medium text-orange-600">待指�?/text>
                <text class="text-2xl font-bold text-orange-700">{{ pendingCount }}</text>
             </view>
             <view class="p-3 rounded-xl bg-blue-50 border border-blue-100 flex flex-col items-center gap-1 shadow-sm">
-               <text class="text-xs font-medium text-blue-600">进行中</text>
+               <text class="text-xs font-medium text-blue-600">进行�?/text>
                <text class="text-2xl font-bold text-blue-700">{{ inProgressCount }}</text>
             </view>
             <view class="p-3 rounded-xl bg-white border border-slate-100 flex flex-col items-center gap-1 shadow-sm">
-               <text class="text-xs font-medium text-slate-500">已完成</text>
+               <text class="text-xs font-medium text-slate-500">已完�?/text>
                <text class="text-2xl font-bold text-slate-700">{{ completedCount }}</text>
             </view>
          </view>
@@ -96,13 +98,13 @@
              <view class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
                  <view class="i-material-symbols-search text-[20px]" />
              </view>
-             <input class="w-full pl-10 pr-4 py-3 rounded-xl bg-white border border-slate-200 text-sm focus:border-[#00b2b2] placeholder-slate-400" placeholder="搜索任务名称、编号或负责人..." type="text" />
+             <input class="w-full pl-10 pr-4 py-3 rounded-xl bg-white border border-slate-200 text-sm focus:border-[#00b2b2] placeholder-slate-400" placeholder="搜索任务名称、编号或负责�?.." type="text" />
          </view>
          <view class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
              <button class="px-4 py-1.5 rounded-full bg-[#00b2b2] text-white text-sm font-medium whitespace-nowrap shadow-sm shadow-[#00b2b2]/20 border-none">全部任务</button>
              <button class="px-4 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 text-sm font-medium whitespace-nowrap hover:bg-slate-50">高优先级 (2)</button>
-             <button class="px-4 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 text-sm font-medium whitespace-nowrap hover:bg-slate-50">待指派 (3)</button>
-             <button class="px-4 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 text-sm font-medium whitespace-nowrap hover:bg-slate-50">待验收 (1)</button>
+             <button class="px-4 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 text-sm font-medium whitespace-nowrap hover:bg-slate-50">待指�?(3)</button>
+             <button class="px-4 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 text-sm font-medium whitespace-nowrap hover:bg-slate-50">待验�?(1)</button>
          </view>
       </view>
 
@@ -112,13 +114,14 @@
              <text class="text-lg font-bold text-slate-900">{{ isSupervisor ? '任务列表' : '历史记录' }}</text>
              <view class="text-xs font-medium text-[#00b2b2] flex items-center gap-0.5">
                  <view class="i-material-symbols-filter-list text-[16px]" />
-                 <text>筛选</text>
+                 <text>筛�?/text>
              </view>
          </view>
 
+
          <!-- Dynamic Task List -->
          <view v-if="loading" class="flex justify-center py-10">
-            <text class="text-sm text-slate-400">加载中...</text>
+            <text class="text-sm text-slate-400">加载�?..</text>
          </view>
          
          <view v-else-if="tasks.length === 0" class="flex justify-center py-10">
@@ -180,27 +183,26 @@
                                {{ taskStatusMap[task.status] || task.status }}
                              </text>
                          </view>
-                         <text class="text-xs text-slate-500 mt-1 line-clamp-1 block">{{ task.description || '无描述' }}</text>
+                         <text class="text-xs text-slate-500 mt-1 line-clamp-1 block">{{ task.description || '无描�? }}</text>
                      </view>
                  </view>
              </view>
              
              <view class="flex items-center justify-between pt-3 border-t border-slate-50">
                  <!-- Assignee Info -->
-                 <view>
-                     <text class="text-[10px] text-slate-400 uppercase tracking-wider font-bold mb-1">负责人</text>
-                     <text v-if="task.status === 'pending' && !task.assigneeId && !task.assignee" class="text-xs font-medium text-slate-400 italic">待指派</text>
+                     <text class="text-[10px] text-slate-400 uppercase tracking-wider font-bold mb-1">负责�?/text>
+                     <text v-if="task.status === 'pending' && !task.assigneeId && !task.assignee" class="text-xs font-medium text-slate-400 italic">待指�?/text>
                      <text v-else-if="task.assignee" class="text-xs font-medium text-slate-600">{{ task.assignee.name }}</text>
                      <text v-else-if="task.assigneeId" class="text-xs font-medium text-slate-600">{{ getAssigneeName(task.assigneeId) }}</text>
-                     <text v-else class="text-xs font-medium text-slate-400">未指派</text>
-                 </view>
+                     <text v-else class="text-xs font-medium text-slate-400">未指�?/text>
 
+                 
                  <!-- Action Buttons -->
                  <view class="flex gap-2">
                      <!-- Pending tasks: show assign button -->
                      <template v-if="task.status === 'pending'">
                          <button class="flex items-center justify-center px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 text-xs font-semibold bg-white" 
-                                 @click.stop="goToSplit(task.id)">拆分任务</button>
+                                 @click.stop="navigateTo('/pages/task/split')">拆分任务</button>
                          <button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#00b2b2] text-white shadow-sm hover:bg-[#00b2b2]/90 text-xs font-semibold border-none"
                                  @click.stop="assignTask(task)">
                              <view class="i-material-symbols-person-add text-[16px]" />
@@ -260,26 +262,26 @@ const rejectedCount = computed(() => tasks.value.filter(t => t.status === 'rejec
 
 // Task type mapping
 const taskTypeMap: Record<string, string> = {
-  maintenance: '设备检修',
+  maintenance: '设备检�?,
   cleaning: '清洁卫生',
   security: '安全巡检',
-  inspection: '例行检查'
+  inspection: '例行检�?
 }
 
 const taskPriorityMap: Record<string, { text: string, color: string }> = {
-  low: { text: '低', color: 'slate' },
-  normal: { text: '中', color: 'blue' },
-  high: { text: '高', color: 'orange' },
-  emergency: { text: '紧急', color: 'red' }
+  low: { text: '�?, color: 'slate' },
+  normal: { text: '�?, color: 'blue' },
+  high: { text: '�?, color: 'orange' },
+  emergency: { text: '紧�?, color: 'red' }
 }
 
 const taskStatusMap: Record<string, string> = {
-  pending: '待指派',
-  assigned: '待开始',
-  in_progress: '进行中',
-  completed: '已完成',
-  verified: '已验收',
-  rejected: '已驳回'
+  pending: '待指�?,
+  assigned: '待开�?,
+  in_progress: '进行�?,
+  completed: '已完�?,
+  verified: '已验�?,
+  rejected: '已驳�?
 }
 
 const fetchTasks = async () => {
@@ -324,13 +326,77 @@ const getAssigneeName = (assigneeId: number) => {
 // Show task detail
 const showTaskDetail = (task: ITask) => {
   console.log('[Task List] Show detail for task:', task.id)
-  uni.navigateTo({ url: `/pages/task/detail?taskId=${task.id}` })
+  navigateTo(`/pages/task/detail?taskId=${task.id}`)
 }
 
 // Assign task
+const selectedTaskForAssignment = ref<ITask | null>(null)
+const showEmployeeSelector = ref(false)
+
+// Get employees (non-admin, non-supervisor users)
+const employeeUsers = computed(() => {
+  const userStore = useUserStore()
+  const currentUserId = userStore.userInfo?.id
+  return users.value.filter(u => 
+    u.role !== 'admin' && 
+    u.role !== 'supervisor' &&
+    u.id !== currentUserId
+  )
+})
+
 const assignTask = (task: ITask) => {
-  console.log('[Task List] Assign task:', task.id)
-  uni.navigateTo({ url: `/pages/task/assign?taskId=${task.id}` })
+  console.log('[Task List] Opening assignment for task:', task.id)
+  selectedTaskForAssignment.value = task
+  showEmployeeSelector.value = true
+}
+
+const assignToEmployee = async (employeeId: number) => {
+  if (!selectedTaskForAssignment.value) return
+  
+  try {
+    uni.showLoading({ title: '指派�?..' })
+    
+    console.log('[Task List] Assigning task:', selectedTaskForAssignment.value.id, 'to employee:', employeeId)
+    
+    // Import updateTask from API
+    const { updateTask } = await import('@/api/task')
+    
+    // Call API to update task
+    const updatedTask = await updateTask(selectedTaskForAssignment.value.id, {
+      assigneeId: employeeId,
+      status: 'in_progress' // Change status to in_progress
+    })
+    
+    console.log('[Task List] Assignment successful:', updatedTask)
+    
+    // Close selector
+    showEmployeeSelector.value = false
+    selectedTaskForAssignment.value = null
+    
+    uni.hideLoading()
+    uni.showToast({ 
+      title: '指派成功', 
+      icon: 'success',
+      duration: 2000
+    })
+    
+    // Refresh task list
+    await fetchTasks()
+    
+  } catch (error) {
+    console.error('[Task List] Assignment failed:', error)
+    uni.hideLoading()
+    uni.showToast({ 
+      title: '指派失败', 
+      icon: 'error',
+      duration: 2000
+    })
+  }
+}
+
+const cancelAssignment = () => {
+  showEmployeeSelector.value = false
+  selectedTaskForAssignment.value = null
 }
 
 const navigateTo = (url: string) => {
@@ -359,12 +425,6 @@ onShow(async () => {
     console.error('Error in Task List onShow:', error)
   }
 })
-
-// Navigate to split page (separate function to avoid tabbar error)
-const goToSplit = (taskId: number) => {
-  console.log('[Task List] Navigate to split page for task:', taskId)
-  uni.navigateTo({ url: `/pages/task/split?taskId=${taskId}` })
-}
 </script>
 
 <style>

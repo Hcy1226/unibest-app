@@ -23,6 +23,8 @@ const LOGIN_PAGE = '/pages/login/index'
  * 如果要立即跳转，不做延时，可以使用 `toLoginPage.flush()` 方法
  */
 export const toLoginPage = debounce((options: ToLoginPageOptions = {}) => {
+  console.log('toLoginPage Triggered!')
+  console.trace('toLoginPage Trace')
   const { mode = 'navigateTo', queryString = '' } = options
 
   const url = `${LOGIN_PAGE}${queryString}`
@@ -35,10 +37,19 @@ export const toLoginPage = debounce((options: ToLoginPageOptions = {}) => {
     return
   }
 
-  if (mode === 'navigateTo') {
-    uni.navigateTo({ url })
-  }
-  else {
-    uni.reLaunch({ url })
-  }
+  console.log('DEBUG: intercepted toLoginPage call')
+  uni.showModal({
+    title: 'DEBUG: Redirect Intercepted',
+    content: 'System tried to redirect to login. Caller trace in console.',
+    showCancel: false
+  })
+
+  return // Disable actual redirect for debugging
+
+  // if (mode === 'navigateTo') {
+  //   uni.navigateTo({ url })
+  // }
+  // else {
+  //   uni.reLaunch({ url })
+  // }
 }, 500)

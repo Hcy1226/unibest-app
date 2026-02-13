@@ -16,7 +16,7 @@
           <view class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[#137fec] text-white mb-4 shadow-lg shadow-blue-500/30">
             <view class="i-material-symbols-domain text-2xl" />
           </view>
-          <text class="text-2xl font-bold text-gray-900 block">物业智慧管理系统</text>
+          <view class="text-2xl font-bold text-center mb-8">用户登录 (v3)</view>
           <text class="text-sm text-gray-500 mt-2 block">Enterprise Operation Management</text>
         </view>
 
@@ -62,6 +62,11 @@ import { ref } from 'vue'
 import { useTokenStore } from '@/store/token'
 import { useUserStore } from '@/store/user'
 import { storeToRefs } from 'pinia'
+import { onLoad } from '@dcloudio/uni-app'
+
+onLoad((options) => {
+  console.log('Login Page Loaded. Options:', options)
+})
 
 const username = ref('')
 const password = ref('')
@@ -82,12 +87,19 @@ const handleLogin = async () => {
     
     // Check role and redirect
     const role = userInfo.value.role
+    const currentUsername = username.value // Using localized value just in case
+    console.log('Login Success. UserInfo:', JSON.stringify(userInfo.value))
+    console.log('Detected Role:', role)
+
     uni.showToast({ title: '登录成功', icon: 'success' })
     
     setTimeout(() => {
-        if (role === 'supervisor' || role === 'admin') {
+        // Fallback or explicit check for 'banzuzhang' as requested
+        if (currentUsername === 'banzuzhang' || role === 'supervisor' || role === 'admin') {
+             console.log('Redirecting to Supervisor Dashboard (SwitchTab) - Matched banzuzhang or supervisor')
              uni.switchTab({ url: '/pages/index/index' })
         } else {
+             console.log('Redirecting to Employee Page (ReLaunch)')
              uni.reLaunch({ url: '/pages/employee/index' })
         }
     }, 500)

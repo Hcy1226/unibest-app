@@ -131,19 +131,19 @@ export function getEnvBaseUrl() {
       miniProgram: { envVersion },
     } = uni.getAccountInfoSync()
 
+    switch (envVersion) {
       case 'develop':
-    baseUrl = import.meta.env.VITE_SERVER_BASEURL || baseUrl
-    break
+        baseUrl = import.meta.env.VITE_SERVER_BASEURL || baseUrl
+        break
       case 'trial':
-    baseUrl = import.meta.env.VITE_SERVER_BASEURL || baseUrl
-    break
+        baseUrl = import.meta.env.VITE_SERVER_BASEURL || baseUrl
+        break
       case 'release':
-    baseUrl = import.meta.env.VITE_SERVER_BASEURL || baseUrl
-    break
+        baseUrl = import.meta.env.VITE_SERVER_BASEURL || baseUrl
+        break
+    }
   }
-}
-
-return baseUrl
+  return baseUrl
 }
 
 /**

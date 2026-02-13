@@ -84,7 +84,11 @@ export interface IUpdatePassword {
  * @returns 是否为单Token响应
  */
 export function isSingleTokenRes(tokenRes: IAuthLoginRes): tokenRes is ISingleTokenRes {
-  return 'token' in tokenRes && !('refreshToken' in tokenRes)
+  console.log('Checking isSingleTokenRes:', JSON.stringify(tokenRes))
+  if (!tokenRes || typeof tokenRes !== 'object') return false
+  const result = 'token' in tokenRes && !('refreshToken' in tokenRes)
+  console.log('isSingleTokenRes result:', result)
+  return result
 }
 
 /**
@@ -93,5 +97,6 @@ export function isSingleTokenRes(tokenRes: IAuthLoginRes): tokenRes is ISingleTo
  * @returns 是否为双Token响应
  */
 export function isDoubleTokenRes(tokenRes: IAuthLoginRes): tokenRes is IDoubleTokenRes {
+  if (!tokenRes || typeof tokenRes !== 'object') return false
   return 'accessToken' in tokenRes && 'refreshToken' in tokenRes
 }

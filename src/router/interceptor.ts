@@ -12,6 +12,7 @@ export const navigateToInterceptor = {
   // 注意，这里的url是 '/' 开头的，如 '/pages/index/index'，跟 'pages.json' 里面的 path 不同
   // 增加对相对路径的处理，BY 网友 @ideal
   invoke({ url, query }: { url: string, query?: Record<string, string> }) {
+    console.log('Router Interceptor Invoke:', url)
     if (url === undefined) {
       return
     }

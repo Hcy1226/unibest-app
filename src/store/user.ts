@@ -21,6 +21,10 @@ export const useUserStore = defineStore(
     // 设置用户信息
     const setUserInfo = (val: IUserInfoRes) => {
       console.log('设置用户信息', val)
+      if (!val) {
+        console.warn('setUserInfo: received undefined or null data')
+        return
+      }
       // 若头像为空 则使用默认头像
       if (!val.avatar) {
         val.avatar = userInfoState.avatar
@@ -42,7 +46,9 @@ export const useUserStore = defineStore(
      * 获取用户信息
      */
     const fetchUserInfo = async () => {
+      console.log('fetchUserInfo: Calling getUserInfo...')
       const res = await getUserInfo()
+      console.log('fetchUserInfo: Result from getUserInfo:', res)
       setUserInfo(res)
       return res
     }

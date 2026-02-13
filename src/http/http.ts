@@ -21,8 +21,13 @@ export function http<T>(options: CustomRequestOptions) {
       // #endif
       // 响应成功
       success: async (res) => {
-        const responseData = res.data as IResponse<T>
-        const { code } = responseData
+        const responseData = res.data as any
+        console.log('HTTP Success: res.data:', responseData)
+
+        // 判断是否为标准包裹格式 { code, data, msg }
+        const isWrapped = responseData && typeof responseData.code !== 'undefined'
+        const code = isWrapped ? responseData.code : (res.statusCode >= 200 && res.statusCode < 300 ? 200 : res.statusCode)
+        console.log('HTTP Success: resolved code:', code)
 
         // 检查是否是401错误（包括HTTP状态码401或业务码401）
         const isTokenExpired = res.statusCode === 401 || code === 401
@@ -95,21 +100,24 @@ export function http<T>(options: CustomRequestOptions) {
         // 处理其他成功状态（HTTP状态码200-299）
         if (res.statusCode >= 200 && res.statusCode < 300) {
           // 处理业务逻辑错误
-          if (code !== ResultEnum.Success0 && code !== ResultEnum.Success200) {
+          if (isWrapped && code !== ResultEnum.Success0 && code !== ResultEnum.Success200) {
             uni.showToast({
               icon: 'none',
               title: responseData.msg || responseData.message || '请求错误',
             })
           }
-          return resolve(responseData.data)
+          // 如果是标准包裹，返回 .data；如果是裸数据，直接返回
+          const finalData = isWrapped ? responseData.data : responseData
+          console.log('HTTP Success: resolving with:', finalData)
+          return resolve(finalData)
         }
 
         // 处理其他错误
         !options.hideErrorToast
-        && uni.showToast({
-          icon: 'none',
-          title: (res.data as any).msg || '请求错误',
-        })
+          && uni.showToast({
+            icon: 'none',
+            title: (res.data as any).msg || '请求错误',
+          })
         reject(res)
       },
       // 响应失败
@@ -186,14 +194,30 @@ export function httpDelete<T>(url: string, query?: Record<string, any>, header?:
   })
 }
 
+/**
+ * PATCH 请求 (小程序不支持 PATCH，改为 PUT)
+ */
+export function httpPatch<T>(url: string, data?: Record<string, any>, query?: Record<string, any>, header?: Record<string, any>, options?: Partial<CustomRequestOptions>) {
+  return http<T>({
+    url,
+    data,
+    query,
+    method: 'PUT',
+    header,
+    ...options,
+  })
+}
+
 // 支持与 axios 类似的API调用
 http.get = httpGet
 http.post = httpPost
 http.put = httpPut
 http.delete = httpDelete
+http.patch = httpPatch
 
 // 支持与 alovaJS 类似的API调用
 http.Get = httpGet
 http.Post = httpPost
 http.Put = httpPut
 http.Delete = httpDelete
+http.Patch = httpPatch

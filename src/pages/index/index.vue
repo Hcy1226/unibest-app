@@ -1,17 +1,111 @@
 <script setup lang="ts">
 import { onShow } from '@dcloudio/uni-app'
+import { useUserStore } from '@/store/user'
+import { ref, computed } from 'vue'
+import { getTaskList } from '@/api/task'
+import type { ITask } from '@/api/types/task'
+import { getUsers, type User } from '@/api/user'
 
-onShow(() => {
+const tasks = ref<ITask[]>([])
+const users = ref<User[]>([])
+const userStore = useUserStore()
+
+// Mappings for UI
+const taskTypeMap: Record<string, string> = {
+  maintenance: '设备检修',
+  cleaning: '清洁卫生',
+  security: '安全巡检',
+  inspection: '例行检查'
+}
+
+const taskStatusMap: Record<string, string> = {
+  pending: '待指派',
+  assigned: '待开始',
+  in_progress: '进行中',
+  completed: '已完成'
+}
+
+// 计算统计数据
+const completionRate = computed(() => {
+  if (tasks.value.length === 0) return 0
+  const completed = tasks.value.filter(t => t.status === 'completed').length
+  return Math.round((completed / tasks.value.length) * 100)
+})
+
+const attendanceRate = computed(() => {
+  if (users.value.length === 0) return 0
+  const active = users.value.filter(u => u.status).length
+  return Math.round((active / users.value.length) * 100)
+})
+
+const activeUserCount = computed(() => users.value.filter(u => u.status).length)
+const totalUserCount = computed(() => users.value.length)
+const pendingTaskCount = computed(() => tasks.value.filter(t => t.status === 'pending' || t.status === 'assigned').length)
+
+const formatDate = (dateStr?: string) => {
+  if (!dateStr) return ''
+  const date = new Date(dateStr)
+  return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`
+}
+
+onShow(async () => {
   // Simple Auth Check
-  const role = uni.getStorageSync('userRole')
+  const userStore = useUserStore()
+  const role = userStore.userInfo.role
+  console.log('[Index Page] onShow triggered, role:', role)
+  
   if (!role) {
     // Not logged in, redirect to login
-    uni.reLaunch({ url: '/pages/login/index' })
+    console.log('[Index Page] Auth Failed - No role')
+    uni.showToast({ title: 'DEBUG: Index Auth Failed (Redirect blocked)', icon: 'none', duration: 3000 })
+    // uni.reLaunch({ url: '/pages/login/index' })
+    return
+  }
+
+  // Fetch Tasks and Users from real API (team leader sees all tasks)
+  try {
+    console.log('[Index Page] Fetching tasks and users...')
+    const [tasksData, usersData] = await Promise.all([
+      getTaskList(),
+      getUsers()
+    ])
+    
+    console.log('[Index Page] Tasks received:', tasksData.length, tasksData)
+    console.log('[Index Page] Users received:', usersData.length)
+    
+    tasks.value = tasksData
+    users.value = usersData
+    
+    // Log statistics
+    console.log('[Index Page] Task stats:', {
+      total: tasks.value.length,
+      pending: tasks.value.filter(t => t.status === 'pending').length,
+      assigned: tasks.value.filter(t => t.status === 'assigned').length,
+      in_progress: tasks.value.filter(t => t.status === 'in_progress').length,
+      completed: tasks.value.filter(t => t.status === 'completed').length
+    })
+    
+    uni.showToast({
+      title: `加载成功: ${tasks.value.length}条任务`,
+      icon: 'success'
+    })
+  } catch (error) {
+    console.error('[Index Page] Failed to fetch data:', error)
+    uni.showToast({
+      title: '加载失败，请检查网络',
+      icon: 'error'
+    })
+    tasks.value = []
+    users.value = []
   }
 })
 
 const navigateTo = (url: string) => {
-  uni.navigateTo({ url })
+  if (url === '/pages/task/list' || url === '/pages/index/index' || url === '/pages/team/index' || url === '/pages/user/index') {
+    uni.switchTab({ url })
+  } else {
+    uni.navigateTo({ url })
+  }
 }
 </script>
 
@@ -58,7 +152,7 @@ const navigateTo = (url: string) => {
               <view class="i-material-symbols-check-circle text-[#00b2b2]/40 text-lg" />
             </view>
             <view class="flex items-end gap-1.5 mt-2">
-              <text class="text-3xl font-bold text-slate-900">85<text class="text-lg text-slate-500 font-medium">%</text></text>
+              <text class="text-3xl font-bold text-slate-900">{{ completionRate }}<text class="text-lg text-slate-500 font-medium">%</text></text>
               <view class="text-[10px] font-medium text-green-600 bg-green-100 px-1.5 py-0.5 rounded mb-1 flex items-center gap-0.5">
                 <view class="i-material-symbols-trending-up text-[10px]" />
                 <text>+2%</text>
@@ -74,8 +168,8 @@ const navigateTo = (url: string) => {
               <view class="i-material-symbols-groups text-slate-300 text-lg" />
             </view>
             <view class="flex items-end gap-1.5 mt-2">
-              <text class="text-3xl font-bold text-slate-900">92<text class="text-lg text-slate-500 font-medium">%</text></text>
-              <text class="text-[10px] font-medium text-slate-500 mb-1">11/12 人</text>
+              <text class="text-3xl font-bold text-slate-900">{{ attendanceRate }}<text class="text-lg text-slate-500 font-medium">%</text></text>
+              <text class="text-[10px] font-medium text-slate-500 mb-1">{{ activeUserCount }}/{{ totalUserCount }} 人</text>
             </view>
           </view>
         </view>
@@ -90,7 +184,7 @@ const navigateTo = (url: string) => {
           <view class="p-3 rounded-xl bg-white border border-slate-100 flex flex-col items-center justify-center gap-1 shadow-sm">
              <view class="i-material-symbols-assignment text-blue-500 mb-1" />
             <text class="text-xs font-medium text-slate-500">待办任务</text>
-            <text class="text-lg font-bold text-slate-900">3</text>
+            <text class="text-lg font-bold text-slate-900">{{ pendingTaskCount }}</text>
           </view>
           <view class="p-3 rounded-xl bg-white border border-slate-100 flex flex-col items-center justify-center gap-1 shadow-sm">
             <view class="i-material-symbols-engineering text-purple-500 mb-1" />
@@ -107,7 +201,7 @@ const navigateTo = (url: string) => {
             <view class="w-1 h-5 rounded-full bg-[#00b2b2]"></view>
             <text>实时任务看板</text>
           </view>
-          <view class="text-xs font-medium text-[#00b2b2] flex items-center gap-0.5">
+          <view class="text-xs font-medium text-[#00b2b2] flex items-center gap-0.5" @click="navigateTo('/pages/task/list')">
             <text>查看全部</text>
             <view class="i-material-symbols-chevron-right text-[16px]" />
           </view>
@@ -115,74 +209,66 @@ const navigateTo = (url: string) => {
 
         <!-- Tabs -->
         <view class="flex gap-2 overflow-x-auto no-scrollbar pb-2">
-          <button class="px-4 py-1.5 rounded-full bg-slate-900 text-white text-sm font-medium whitespace-nowrap shadow-sm border-none">进行中 (2)</button>
-          <button class="px-4 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 text-sm font-medium whitespace-nowrap hover:bg-slate-50">待开始 (1)</button>
-          <button class="px-4 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 text-sm font-medium whitespace-nowrap hover:bg-slate-50">已完成 (4)</button>
+          <button class="px-4 py-1.5 rounded-full bg-slate-900 text-white text-sm font-medium whitespace-nowrap shadow-sm border-none">进行中 ({{ tasks.filter(t => t.status === 'in_progress').length }})</button>
+          <button class="px-4 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 text-sm font-medium whitespace-nowrap hover:bg-slate-50">待开始 ({{ tasks.filter(t => t.status === 'pending' || t.status === 'assigned').length }})</button>
+          <button class="px-4 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 text-sm font-medium whitespace-nowrap hover:bg-slate-50">已完成 ({{ tasks.filter(t => t.status === 'completed').length }})</button>
         </view>
 
         <!-- Task List -->
         <view class="flex flex-col gap-3">
-          <!-- Task 1: Blue -->
-          <view class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm relative overflow-hidden group">
-            <view class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 rounded-l-2xl"></view>
+          <view 
+            v-for="task in tasks" 
+            :key="task.id"
+            class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm relative overflow-hidden group"
+            :class="{'opacity-70': task.status === 'pending'}"
+          >
+            <!-- Priority Color Bar -->
+            <view 
+              class="absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl"
+              :class="{
+                'bg-blue-500': task.type === 'maintenance',
+                'bg-orange-500': task.priority === 'emergency',
+                'bg-slate-300': task.type === 'security'
+              }"
+            ></view>
+            
             <view class="flex justify-between items-start mb-2">
-              <text class="px-2 py-1 rounded bg-blue-50 text-blue-600 text-[10px] font-bold uppercase tracking-wide">设备检修</text>
-              <text class="text-xs text-slate-400 font-medium">10:00 - 12:00</text>
+              <text 
+                class="px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wide"
+                :class="{
+                  'bg-blue-50 text-blue-600': task.type === 'maintenance',
+                  'bg-orange-50 text-orange-600': task.priority === 'emergency',
+                  'bg-slate-100 text-slate-500': task.type === 'security'
+                }"
+              >
+                {{ taskTypeMap[task.type] || task.type }}
+              </text>
+              <text class="text-xs text-slate-400 font-medium">{{ formatDate(task.deadline) }}</text>
             </view>
-            <text class="text-base font-bold text-slate-900 mb-1 block">A区3号发电机组例行维护</text>
-            <text class="text-xs text-slate-500 mb-3 lines-2 block">检查冷却系统压力，更换滤芯，记录运行参数。注意高温警示。</text>
+            
+            <text class="text-base font-bold text-slate-900 mb-1 block">{{ task.title }}</text>
+            <text class="text-xs text-slate-500 mb-3 lines-2 block">{{ task.description }}</text>
+            
             <view class="flex items-center justify-between mt-2 pt-3 border-t border-slate-50">
               <view class="flex -space-x-2">
                  <image src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_3akt4pBE2Mma8dD_tiEytpnCMDG-SheizPG9bWt6A8uGtVSXYkT1KXbMQALEegBP7ME1YZWDPtH7OAy9Uh_Kvu36b5RWqPmy5Pj0cSSwU3lSo3AiRXHq6EmGthG8AmH3z-NzeKeHuj007ncxIrh5ug3pxaxPoBWm62x82p5gElNcoPRi9rKYa21c9YY5U-u0PsQXS9Lz4YmtWfo-SB1iEz5iAZiaqum5wei7YVjtm7mRUhVMtSXDo2h41jC1fIcFQ_A9o7zXmWM" class="size-6 rounded-full border-2 border-white" />
-                 <image src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVxcv5rE7bPWvJHB-N0lSWNqr11mcLlNUTU2s76bSGxbwk2-1VVsqS5g1XfABHJBesDOZR_I8NN9f1pT-Z9K7Vm7zRaNlFXiCUAiLIjxKqroCRRQjOlXQ_foi56zhSjo8AZYf97FHmUUqLVNDW-aQX0LBPygwFXBrH2b3IvgIzg4lywnf-z_aOzjFFYE9qikC40J7mF6hWhXREDLL8rTAhJijuHmAmuLr4upczwhb_q8YsozGtvnwDquD2icbLuX66yDkTfXIlBHk" class="size-6 rounded-full border-2 border-white" />
                  <view class="size-6 rounded-full bg-slate-100 border-2 border-white flex items-center justify-center text-[10px] text-slate-500 font-bold">+1</view>
               </view>
-              <view class="flex items-center gap-1 text-blue-500 font-medium text-xs">
-                <text>进行中</text>
-                <view class="i-material-symbols-timelapse text-[16px] animate-pulse" />
+              
+              <view class="flex items-center gap-1 font-medium text-xs"
+                :class="{
+                  'text-blue-500': task.status === 'in_progress',
+                  'text-orange-500': task.status === 'assigned',
+                  'text-slate-400': task.status === 'pending'
+                }"
+              >
+                <text>{{ taskStatusMap[task.status] || task.status }}</text>
+                <view 
+                  class="i-material-symbols-timelapse text-[16px]" 
+                  :class="{'animate-pulse': task.status === 'in_progress'}" 
+                />
               </view>
             </view>
-          </view>
-
-          <!-- Task 2: Orange -->
-          <view class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm relative overflow-hidden group">
-             <view class="absolute left-0 top-0 bottom-0 w-1 bg-orange-500 rounded-l-2xl"></view>
-             <view class="flex justify-between items-start mb-2">
-               <text class="px-2 py-1 rounded bg-orange-50 text-orange-600 text-[10px] font-bold uppercase tracking-wide">紧急报修</text>
-               <text class="text-xs text-slate-400 font-medium">13:30 - 14:30</text>
-             </view>
-             <text class="text-base font-bold text-slate-900 mb-1 block">B区照明系统故障排查</text>
-             <text class="text-xs text-slate-500 mb-3 lines-2 block">B区走廊照明闪烁，需排查线路接触不良或镇流器问题。</text>
-             <view class="flex items-center justify-between mt-2 pt-3 border-t border-slate-50">
-               <view class="flex -space-x-2">
-                 <image src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxtbBR0irCpY1uUeC7VopwGWFnIESGXHm_q-N7s20rfh9yQqT85SoqOnQiV8oTSfc1Vls-npf9s3oGFGPsQd3plpgpBTwuPhLEUM7k7HQv10RLGdSs-4vLqOvrpDv0Icmlu2tifzfY7k0rUuNt_QB5s4Rv1R1eP4AiobyKOl861_kV9jspuSc3hggHjmImlsIwAgGqS7__XbqCr5uKfGjpX32iGSKR5NB31cneHtFTOLV5kRWGBeyhh1YUBVr8erHwHdWi1wmtG8U" class="size-6 rounded-full border-2 border-white" />
-               </view>
-               <view class="flex items-center gap-1 text-orange-500 font-medium text-xs">
-                 <text>进行中</text>
-                 <view class="i-material-symbols-timelapse text-[16px] animate-pulse" />
-               </view>
-             </view>
-          </view>
-
-          <!-- Task 3: Slate -->
-          <view class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm relative overflow-hidden opacity-70">
-             <view class="absolute left-0 top-0 bottom-0 w-1 bg-slate-300 rounded-l-2xl"></view>
-             <view class="flex justify-between items-start mb-2">
-               <text class="px-2 py-1 rounded bg-slate-100 text-slate-500 text-[10px] font-bold uppercase tracking-wide">安全巡检</text>
-               <text class="text-xs text-slate-400 font-medium">15:00 - 16:00</text>
-             </view>
-             <text class="text-base font-bold text-slate-900 mb-1 block">全厂消防设施周检</text>
-             <text class="text-xs text-slate-500 mb-3 lines-2 block">检查灭火器压力、消防栓是否完好，确保通道无阻碍。</text>
-             <view class="flex items-center justify-between mt-2 pt-3 border-t border-slate-50">
-               <view class="flex -space-x-2">
-                 <image src="https://lh3.googleusercontent.com/aida-public/AB6AXuDL537DzJFFDsubwAb7JAu4y5e7yKWbRNW8IKCTASUtgZefBQPiBW8Fta-FZX523GeJys-93vDNSDsw_70N8HXRRYmRjtUP7GT-fZ3TVX2btxnJmBbNXq2yjIsiQred8cXTHHqnoDnVvnAcKs3gtvJZk7xHPsgsj6aSKHotSe0iUinV0OPDbpgmt_ynK4iZJAQE_qCNsrQJuS722Ie-1ft4tdejNRZJ2J0fOitg6K2da1d2JERJymeVS3yEC-MqDru0S3VQjLCgNEE" class="size-6 rounded-full border-2 border-white" />
-                 <image src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxEL98FwKlnSzqqsGoGpSBznLGkeU70HBtvTRXBo-cR-wSAbeR_swMJnnLhRz8_miKuMGpOrTnMhf3R4K0VHJ0ZH657hCjyxiOCCvcISVV9XbfdzUjrAVs9XxS7mhotemjbiCD40IoKrIuVUvM8pig5ueU8QaoX1yXECE6ARSO1CShLCB8-fgthfa-IwR6S3_w6haUPU4aSk84XN7nFCp57aDkycNzAuaPtfkot8tJ5aBzdoiuqpgkHlwg44TOsWNAjocNiiOqkOI" class="size-6 rounded-full border-2 border-white" />
-               </view>
-               <view class="flex items-center gap-1 text-slate-400 font-medium text-xs">
-                 <text>待开始</text>
-                 <view class="i-material-symbols-schedule text-[16px]" />
-               </view>
-             </view>
           </view>
         </view>
       </view>
