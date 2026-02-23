@@ -77,6 +77,7 @@ import { onLoad } from '@dcloudio/uni-app'
 import { getUsers, type User } from '@/api/user'
 import { getTaskList } from '@/api/task'
 import type { ITask } from '@/api/types/task'
+import { http } from '@/http/http'
 
 const taskId = ref<number | null>(null)
 const taskInfo = ref<ITask | null>(null)
@@ -103,17 +104,9 @@ const selectMember = async (member: User) => {
   
   try {
     // Call API to update task assignee
-    const res = await uni.request({
-      url: `http://127.0.0.1:3000/tasks/${taskId.value}`,
-      method: 'PATCH',  // Use PATCH instead of PUT
-      header: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${uni.getStorageSync('token')}`
-      },
-      data: {
+    const res = await http.put(`/tasks/${taskId.value}`, {
         assigneeId: member.id,
-        status: 'in_progress' // Update status to in_progress (待进行)
-      }
+        status: 'assigned' // Update status to assigned (待开始) instead of in_progress
     })
 
     console.log('[Assign Page] Task updated:', res)

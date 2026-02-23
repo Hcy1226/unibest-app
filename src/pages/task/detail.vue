@@ -157,8 +157,8 @@
                   
                   <!-- Images -->
                   <view v-if="report.imagePaths && report.imagePaths.length" class="grid grid-cols-3 gap-2">
-                      <view v-for="(img, idx) in report.imagePaths" :key="idx" class="relative aspect-square rounded-lg overflow-hidden bg-slate-100" @click="previewImage(report.imagePaths, idx)">
-                          <image :src="`http://127.0.0.1:3000${img}`" class="w-full h-full" mode="aspectFill" />
+                      <view v-for="(img, idx) in report.imagePaths" :key="idx" class="relative aspect-square rounded-lg overflow-hidden bg-slate-100" @click="previewImage(report.imagePaths, Number(idx))">
+                          <image :src="img.startsWith('data:') ? img : `http://127.0.0.1:3000${img}`" class="w-full h-full" mode="aspectFill" />
                       </view>
                   </view>
               </view>
@@ -219,6 +219,19 @@
                 <text>拆分任务</text>
             </button>
           </view>
+        </view>
+
+        <!-- Supervisor Actions (Verify Task) -->
+        <view v-if="canVerifyTask" class="bg-gradient-to-r from-green-500 to-emerald-500 p-4 rounded-xl shadow-lg mt-4">
+          <text class="text-sm font-bold text-white block mb-2">✅ 班组长操作</text>
+          <text class="text-xs text-green-50 block mb-3">该任务正在进行中，如果您确认已完成，可点击验收通过</text>
+          <button 
+              class="w-full bg-white text-green-600 py-3 rounded-lg font-bold text-sm flex items-center justify-center gap-2 active:scale-95 transition-transform border-none"
+              @click="verifyTask"
+          >
+              <view class="i-material-symbols-check-circle text-xl"></view>
+              <text>验收通过 (标记为已完成)</text>
+          </button>
         </view>
 
        <!-- Employee Selector Modal -->
@@ -333,6 +346,11 @@ const canAssignTask = computed(() => {
   return taskInfo.value.status === 'pending' && taskInfo.value.supervisorId === currentUserId.value
 })
 
+const canVerifyTask = computed(() => {
+  if (!taskInfo.value || !currentUserId.value) return false
+  return taskInfo.value.status === 'in_progress' && taskInfo.value.supervisorId === currentUserId.value
+})
+
 // 获取可指派的团队成员（当前班组长的下属）
 const teamMembers = computed(() => {
   // 简单实现：返回所有非supervisor/admin角色的用户
@@ -346,14 +364,14 @@ const teamMembers = computed(() => {
 
 const playVoice = (path: string) => {
     if (!path) return
-    const url = `http://127.0.0.1:3000${path}`
+    const url = path.startsWith('data:') ? path : `http://127.0.0.1:3000${path}`
     console.log('Playing voice:', url)
     innerAudioContext.src = url
     innerAudioContext.play()
 }
 
 const previewImage = (paths: string[], current: number) => {
-    const urls = paths.map(p => `http://127.0.0.1:3000${p}`)
+    const urls = paths.map(p => p.startsWith('data:') ? p : `http://127.0.0.1:3000${p}`)
     uni.previewImage({
         urls,
         current
@@ -402,6 +420,32 @@ const assignToEmployee = async (employeeId: number) => {
       title: '指派失败', 
       icon: 'error' 
     })
+  }
+}
+
+const verifyTask = async () => {
+  if (!taskInfo.value) return
+  
+  try {
+    uni.showLoading({ title: '处理中...' })
+    
+    // 调用API更新任务
+    const updatedTask = await updateTask(taskInfo.value.id, {
+      status: TaskStatus.COMPLETED
+    })
+    
+    if (updatedTask && (updatedTask.id || updatedTask.status)) {
+      taskInfo.value = { ...taskInfo.value, ...updatedTask }
+      uni.showToast({ title: '验收成功', icon: 'success' })
+    } else {
+      uni.showToast({ title: '操作失败', icon: 'none' })
+    }
+    
+    uni.hideLoading()
+  } catch (error) {
+    console.error('[Task Detail] Failed to verify task:', error)
+    uni.hideLoading()
+    uni.showToast({ title: '操作失败', icon: 'error' })
   }
 }
 

@@ -111,6 +111,7 @@ import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { getTaskList } from '@/api/task'
 import type { ITask } from '@/api/types/task'
+import { http } from '@/http/http'
 
 const taskId = ref<number | null>(null)
 const taskInfo = ref<ITask | null>(null)
@@ -189,7 +190,8 @@ const chooseImage = () => {
     sourceType: ['camera', 'album'],
     success: (res) => {
       console.log('[Report] Images chosen:', res.tempFilePaths)
-      images.value.push(...res.tempFilePaths)
+      const paths = Array.isArray(res.tempFilePaths) ? res.tempFilePaths : [res.tempFilePaths]
+      images.value.push(...paths as string[])
     },
     fail: (err) => {
       console.error('[Report] Choose image failed:', err)
@@ -226,54 +228,63 @@ const submitReport = async () => {
   uni.showLoading({ title: '提交中...', mask: true })
 
   try {
+    // Helper to convert local file to Base64
+    const fileToBase64 = (filePath: string): Promise<string> => {
+      return new Promise((resolve, reject) => {
+        if (uni.getFileSystemManager) {
+          const fs = uni.getFileSystemManager()
+          fs.readFile({
+            filePath: filePath,
+            encoding: 'base64',
+            success: (res) => {
+              let mimeType = 'image/jpeg'
+              const lowerPath = filePath.toLowerCase()
+              if (lowerPath.endsWith('.png')) mimeType = 'image/png'
+              else if (lowerPath.endsWith('.gif')) mimeType = 'image/gif'
+              else if (lowerPath.endsWith('.mp3')) mimeType = 'audio/mp3'
+              else if (lowerPath.endsWith('.aac') || lowerPath.endsWith('.m4a')) mimeType = 'audio/mp4'
+              resolve(`data:${mimeType};base64,${res.data}`)
+            },
+            fail: reject
+          })
+        } else {
+          uni.request({
+            url: filePath,
+            responseType: 'arraybuffer',
+            success: (res) => {
+              const base64 = uni.arrayBufferToBase64(res.data as ArrayBuffer)
+              let mimeType = 'image/jpeg'
+              if (filePath.toLowerCase().endsWith('.png')) mimeType = 'image/png'
+              else if (filePath.toLowerCase().endsWith('.mp3')) mimeType = 'audio/mp3'
+              resolve(`data:${mimeType};base64,${base64}`)
+            },
+            fail: reject
+          })
+        }
+      })
+    }
+
     // Upload voice file if exists
     let uploadedVoicePath = ''
     if (voicePath.value) {
-      const voiceUpload = await uni.uploadFile({
-        url: 'http://127.0.0.1:3000/upload/voice',
-        filePath: voicePath.value,
-        name: 'file',
-        header: {
-          'Authorization': `Bearer ${uni.getStorageSync('token')}`
-        }
-      })
-      
-      const voiceData = JSON.parse(voiceUpload.data)
-      uploadedVoicePath = voiceData.data.path
-      console.log('[Report] Voice uploaded:', uploadedVoicePath)
+      uploadedVoicePath = await fileToBase64(voicePath.value)
+      console.log('[Report] Voice encoded to base64')
     }
 
     // Upload images if exists
     const uploadedImagePaths: string[] = []
     for (const img of images.value) {
-      const imgUpload = await uni.uploadFile({
-        url: 'http://127.0.0.1:3000/upload/image',
-        filePath: img,
-        name: 'file',
-        header: {
-          'Authorization': `Bearer ${uni.getStorageSync('token')}`
-        }
-      })
-      
-      const imgData = JSON.parse(imgUpload.data)
-      uploadedImagePaths.push(imgData.data.path)
-      console.log('[Report] Image uploaded:', imgData.data.path)
+      const base64Data = await fileToBase64(img)
+      uploadedImagePaths.push(base64Data)
+      console.log('[Report] Image encoded to base64')
     }
 
     // Submit report
-    const res = await uni.request({
-      url: 'http://127.0.0.1:3000/task-reports',
-      method: 'POST',
-      header: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${uni.getStorageSync('token')}`
-      },
-      data: {
+    const res = await http.post('/task-reports', {
         taskId: taskId.value,
         content: content.value,
         voicePath: uploadedVoicePath,
         imagePaths: uploadedImagePaths
-      }
     })
 
     console.log('[Report] Report submitted:', res)

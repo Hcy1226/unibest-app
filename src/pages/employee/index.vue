@@ -148,17 +148,15 @@
       </view>
     </view>
     
-    <!-- Custom Tab Bar -->
-    <CustomTabBar />
   </view>
 </template>
 
 <script setup lang="ts">
-import CustomTabBar from '@/components/CustomTabBar.vue'
 import { ref, computed, onMounted } from 'vue'
 import { onShow } from '@dcloudio/uni-app'
 import { useUserStore } from '@/store/user'
-import type { ITask } from '@/api/types/task'
+import { type ITask, TaskStatus } from '@/api/types/task'
+import { http } from '@/http/http'
 
 const userStore = useUserStore()
 const userInfo = computed(() => userStore.userInfo)
@@ -232,41 +230,25 @@ const fetchMyTasks = async () => {
   loading.value = true
   try {
     console.log('[Employee Index] Fetching my tasks...')
-    const res = await uni.request({
-      url: 'http://127.0.0.1:3000/tasks/my-tasks',
-      method: 'GET',
-      header: {
-        'Authorization': `Bearer ${uni.getStorageSync('token')}`
-      }
-    })
-    
+    const res = await http.get('/tasks/my-tasks')
     console.log('[Employee Index] My tasks response:', res)
     
-    // Handle response data
-    if (res.statusCode === 200) {
-      const data = res.data as any
-      // Check if data is array or wrapped in data property
-      if (Array.isArray(data)) {
-        tasks.value = data as ITask[]
-      } else if (data && Array.isArray(data.data)) {
-        tasks.value = data.data as ITask[]
-      } else {
-        console.error('[Employee Index] Invalid data format:', data)
-        tasks.value = []
-      }
-      
-      uni.showToast({
-        title: `加载成功: ${tasks.value.length}个任务`,
-        icon: 'success'
-      })
-    } else {
-      console.error('[Employee Index] HTTP error:', res.statusCode)
-      tasks.value = []
-      uni.showToast({
-        title: '加载失败',
-        icon: 'error'
-      })
+    // In unibest http interceptor, successful res returns `.data` or the unboxed response directly
+    let dataList = []
+    if (Array.isArray(res)) {
+       dataList = res
+    } else if (res && Array.isArray((res as any).data)) {
+       dataList = (res as any).data
+    } else if (res) {
+       dataList = res as any
     }
+    
+    tasks.value = dataList as ITask[]
+    
+    uni.showToast({
+      title: `加载成功: ${tasks.value.length}个任务`,
+      icon: 'success'
+    })
   } catch (error) {
     console.error('[Employee Index] Failed to fetch tasks:', error)
     tasks.value = []
@@ -283,41 +265,49 @@ const fetchMyTasks = async () => {
 const startTask = async (task: ITask) => {
   console.log('[Employee Index] Start task:', task.id)
   
-  uni.showLoading({ title: '启动中...', mask: true })
-  
+  // Don't show global loading overlay which could be annoying, just handle state
   try {
-    const res = await uni.request({
-      url: `http://127.0.0.1:3000/tasks/${task.id}`,
-      method: 'PUT',
-      header: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${uni.getStorageSync('token')}`
-      },
-      data: {
-        status: 'in_progress'
-      }
-    })
+    const res = await http.put(`/tasks/${task.id}`, { status: TaskStatus.IN_PROGRESS })
     
     console.log('[Employee Index] Task started:', res)
     
-    uni.hideLoading()
+    // Optimistic UI update
+    task.status = TaskStatus.IN_PROGRESS
+    
     uni.showToast({
       title: '任务已开始',
       icon: 'success'
     })
     
-    // Refresh task list
-    await fetchMyTasks()
+    // Check if the backend response gave us anything fresh
+    if (res && (res as any).status) {
+       task.status = (res as any).status
+    }
+    
+    // Refresh quietly in the background (no loading indicator)
+    quietRefreshMyTasks()
   } catch (error) {
     console.error('[Employee Index] Start task failed:', error)
-    uni.hideLoading()
     uni.showToast({
-      title: '启动失败',
+      title: '启动失败: 网络或鉴权错误',
       icon: 'error'
     })
-  } finally {
-    uni.hideLoading()
   }
+}
+
+// Quietly refresh to avoid blinking "加载中"
+const quietRefreshMyTasks = async () => {
+    try {
+        const res = await http.get('/tasks/my-tasks')
+        let dataList = []
+        if (Array.isArray(res)) dataList = res
+        else if (res && Array.isArray((res as any).data)) dataList = (res as any).data
+        else if (res) dataList = res as any
+        
+        tasks.value = dataList as ITask[]
+    } catch(err) {
+        console.error('Quiet refresh failed', err)
+    }
 }
 
 // Report task

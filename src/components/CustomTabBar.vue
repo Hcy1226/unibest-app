@@ -22,13 +22,29 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useUserStore } from '@/store/user'
 
-const tabList = [
-  { text: '首页', icon: 'i-material-symbols-dashboard', path: '/pages/index/index' },
-  { text: '任务', icon: 'i-material-symbols-assignment', path: '/pages/task/list' },
-  { text: '班组', icon: 'i-material-symbols-groups', path: '/pages/team/index' },
-  { text: '个人', icon: 'i-material-symbols-person', path: '/pages/user/index' },
-]
+const userStore = useUserStore()
+
+const tabList = computed(() => {
+  const role = userStore.userInfo?.role
+  
+  if (role === 'employee') {
+    return [
+      { text: '任务', icon: 'i-material-symbols-assignment', path: '/pages/employee/index' },
+      { text: '历史', icon: 'i-material-symbols-history', path: '/pages/employee/history' },
+      { text: '统计', icon: 'i-material-symbols-bar-chart', path: '/pages/employee/statistics' },
+      { text: '个人', icon: 'i-material-symbols-person', path: '/pages/user/index' },
+    ]
+  }
+
+  return [
+    { text: '首页', icon: 'i-material-symbols-dashboard', path: '/pages/index/index' },
+    { text: '任务', icon: 'i-material-symbols-assignment', path: '/pages/task/list' },
+    { text: '班组', icon: 'i-material-symbols-groups', path: '/pages/team/index' },
+    { text: '个人', icon: 'i-material-symbols-person', path: '/pages/user/index' },
+  ]
+})
 
 const currentPath = computed(() => {
   const pages = getCurrentPages()
@@ -46,7 +62,10 @@ const switchTab = (item: any) => {
       '/pages/index/index',
       '/pages/task/list',
       '/pages/team/index',
-      '/pages/user/index'
+      '/pages/user/index',
+      '/pages/employee/index',
+      '/pages/employee/history',
+      '/pages/employee/statistics'
     ]
     if (tabbarPages.includes(item.path)) {
       uni.switchTab({ url: item.path })

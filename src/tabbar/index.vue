@@ -3,6 +3,22 @@
 import { customTabbarEnable, needHideNativeTabbar, tabbarCacheEnable } from './config'
 import { tabbarList, tabbarStore } from './store'
 import TabbarItem from './TabbarItem.vue'
+import { computed } from 'vue'
+import { useUserStore } from '@/store/user'
+
+const userStore = useUserStore()
+
+const displayTabbarList = computed(() => {
+  const role = userStore.userInfo?.role
+  if (role === 'employee') {
+    return tabbarList.filter(item => 
+      ['/pages/employee/index', '/pages/employee/history', '/pages/employee/statistics', '/pages/user/index'].includes(item.pagePath)
+    )
+  }
+  return tabbarList.filter(item => 
+      ['/pages/index/index', '/pages/task/list', '/pages/task/split', '/pages/team/index', '/pages/user/index'].includes(item.pagePath)
+  )
+})
 
 // #ifdef MP-WEIXIN
 // 将自定义节点设置成虚拟的（去掉自定义组件包裹层），更加接近Vue组件的表现，能更好的使用flex属性
@@ -21,21 +37,24 @@ function handleClickBulge() {
   })
 }
 
-function handleClick(index: number) {
+function handleClick(displayIndex: number) {
+  const item = displayTabbarList.value[displayIndex];
+  const realIndex = tabbarList.findIndex(t => t.pagePath === item.pagePath);
+
   // 点击原来的不做操作
-  if (index === tabbarStore.curIdx) {
+  if (realIndex === tabbarStore.curIdx && !item.isCenterButton && !item.isBulge) {
     return
   }
-  if (tabbarList[index].isBulge) {
+  if (item.isBulge) {
     handleClickBulge()
     return
   }
-  if (tabbarList[index].isCenterButton) {
-    uni.navigateTo({ url: tabbarList[index].pagePath })
+  if (item.isCenterButton) {
+    uni.navigateTo({ url: item.pagePath })
     return
   }
-  const url = tabbarList[index].pagePath
-  tabbarStore.setCurIdx(index)
+  const url = item.pagePath
+  tabbarStore.setCurIdx(realIndex)
   if (tabbarCacheEnable) {
     uni.switchTab({ url })
   }
@@ -75,8 +94,10 @@ onMounted(() => {
 // #endif
 const activeColor = 'var(--wot-color-theme, #1890ff)'
 const inactiveColor = '#666'
-function getColorByIndex(index: number) {
-  return tabbarStore.curIdx === index ? activeColor : inactiveColor
+function getColorByIndex(displayIndex: number) {
+  const item = displayTabbarList.value[displayIndex];
+  const realIndex = tabbarList.findIndex(t => t.pagePath === item.pagePath);
+  return tabbarStore.curIdx === realIndex ? activeColor : inactiveColor
 }
 </script>
 
@@ -85,7 +106,7 @@ function getColorByIndex(index: number) {
     <view class="border-and-fixed bg-white" @touchmove.stop.prevent>
       <view class="h-50px flex items-center">
         <view
-          v-for="(item, index) in tabbarList" :key="index"
+          v-for="(item, index) in displayTabbarList" :key="index"
           class="flex flex-1 flex-col items-center justify-center"
           :style="{ color: getColorByIndex(index) }"
           @click="handleClick(index)"
@@ -93,7 +114,7 @@ function getColorByIndex(index: number) {
           <view v-if="item.isBulge" class="relative">
             <!-- 中间一个鼓包tabbarItem的处理 -->
             <view class="bulge">
-              <TabbarItem :item="item" :index="index" class="text-center" is-bulge />
+              <TabbarItem :item="item" :index="tabbarList.findIndex(t => t.pagePath === item.pagePath)" class="text-center" is-bulge />
             </view>
           </view>
           <!-- 中间平铺按钮的处理 -->
@@ -104,7 +125,7 @@ function getColorByIndex(index: number) {
           >
              <view :class="item.icon" class="text-white text-2xl" />
           </view>
-          <TabbarItem v-else :item="item" :index="index" class="relative px-3 text-center" />
+          <TabbarItem v-else :item="item" :index="tabbarList.findIndex(t => t.pagePath === item.pagePath)" class="relative px-3 text-center" />
         </view>
       </view>
 

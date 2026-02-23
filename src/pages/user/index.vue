@@ -106,13 +106,17 @@
 
       <button class="w-full py-3.5 rounded-xl border border-slate-200 text-red-500 font-semibold hover:bg-red-50 transition-colors mb-4 text-sm bg-white" @click="handleLogout">退出登录</button>
     </view>
-    <CustomTabBar />
   </view>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { onShow } from '@dcloudio/uni-app'
+import { useUserStore } from '@/store/user'
+import { useTokenStore } from '@/store/token'
+
+const userStore = useUserStore()
+const tokenStore = useTokenStore()
 
 const userInfo = ref({
   name: 'Alex Chen',
@@ -125,15 +129,15 @@ const userInfo = ref({
 const isSupervisor = ref(true)
 
 onShow(() => {
-  const role = uni.getStorageSync('userRole')
+  const role = userStore.userInfo?.role
   if (role === 'employee') {
     isSupervisor.value = false
     userInfo.value = {
-      name: '操作员 Alex',
+      name: userStore.userInfo?.name || '一线员工',
       role: '一线员工',
-      roleTag: 'C组操作员',
-      id: '#9527',
-       avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC9ni5JPq3Fb1n-ptGOUQvLTCsMEpWa_6qmrKpKzp2xGH4UjwY-PdXXgVjVfnGpN9G-FcIvR1xa7r1u844NKBS7Xwm-El5weCJJ17pOvU3rY92H1PKfbr1T99Xs4GcVBfjXl-7cx-A3DcJtxCzfHCOmWh4zWOodeDH4Z3szYWSEJQZHLmPWyLJgNhwW9BxmSQzSPM0hYsCNln4N0afZjSIxgpT82HoSEdW0GjB0PgXs3MhAIIQhZEiuos2EirWctQp6aINfjh1tFbA'
+      roleTag: '执行人',
+      id: `#${userStore.userInfo?.userId || '9527'}`,
+       avatar: userStore.userInfo?.avatar || 'https://lh3.googleusercontent.com/aida-public/AB6AXuC9ni5JPq3Fb1n-ptGOUQvLTCsMEpWa_6qmrKpKzp2xGH4UjwY-PdXXgVjVfnGpN9G-FcIvR1xa7r1u844NKBS7Xwm-El5weCJJ17pOvU3rY92H1PKfbr1T99Xs4GcVBfjXl-7cx-A3DcJtxCzfHCOmWh4zWOodeDH4Z3szYWSEJQZHLmPWyLJgNhwW9BxmSQzSPM0hYsCNln4N0afZjSIxgpT82HoSEdW0GjB0PgXs3MhAIIQhZEiuos2EirWctQp6aINfjh1tFbA'
     }
   } else {
     isSupervisor.value = true
@@ -142,7 +146,7 @@ onShow(() => {
 })
 
 const handleLogout = () => {
-    uni.removeStorageSync('userRole')
+    tokenStore.logout()
     uni.reLaunch({ url: '/pages/login/index' })
 }
 </script>

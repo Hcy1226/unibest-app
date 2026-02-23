@@ -66,6 +66,24 @@ export const customTabbarList: CustomTabBarItem[] = [
     icon: 'i-material-symbols-groups',
   },
   {
+    text: '任务',
+    pagePath: 'pages/employee/index',
+    iconType: 'unocss',
+    icon: 'i-material-symbols-assignment',
+  },
+  {
+    text: '历史',
+    pagePath: 'pages/employee/history',
+    iconType: 'unocss',
+    icon: 'i-material-symbols-history',
+  },
+  {
+    text: '统计',
+    pagePath: 'pages/employee/statistics',
+    iconType: 'unocss',
+    icon: 'i-material-symbols-bar-chart',
+  },
+  {
     text: '我的',
     pagePath: 'pages/user/index',
     iconType: 'unocss',
