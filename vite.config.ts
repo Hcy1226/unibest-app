@@ -19,6 +19,7 @@ import UniOptimization from '@uni-ku/bundle-optimizer'
 // https://github.com/uni-ku/root
 import UniKuRoot from '@uni-ku/root'
 import dayjs from 'dayjs'
+import fs from 'fs-extra'
 import { visualizer } from 'rollup-plugin-visualizer'
 import UnoCSS from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
@@ -27,6 +28,7 @@ import ViteRestart from 'vite-plugin-restart'
 import openDevTools from './scripts/open-dev-tools'
 import { createCopyNativeResourcesPlugin } from './vite-plugins/copy-native-resources'
 import syncManifestPlugin from './vite-plugins/sync-manifest-plugins'
+
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
@@ -147,6 +149,25 @@ export default defineConfig(({ command, mode }) => {
       syncManifestPlugin(),
       // 自动打开开发者工具插件 (必须修改 .env 文件中的 VITE_WX_APPID)
       openDevTools({ mode }),
+      // 微信小程序：构建后将 tabbar/ 目录复制为 custom-tab-bar/（微信要求固定路径）
+      UNI_PLATFORM === 'mp-weixin' && {
+        name: 'copy-tabbar-to-custom-tab-bar',
+        enforce: 'post' as const,
+        async writeBundle() {
+          const buildMode = mode === 'production' ? 'build' : 'dev'
+          const outDir = path.resolve(process.cwd(), 'dist', buildMode, 'mp-weixin')
+          const tabbarSrc = path.join(outDir, 'tabbar')
+          const customTabbarDest = path.join(outDir, 'custom-tab-bar')
+          try {
+            if (await fs.pathExists(tabbarSrc)) {
+              await fs.copy(tabbarSrc, customTabbarDest, { overwrite: true })
+              console.log('[copy-tabbar] ✅ 已复制 tabbar/ => custom-tab-bar/')
+            }
+          } catch (e) {
+            console.error('[copy-tabbar] ❌ 复制失败:', e)
+          }
+        },
+      },
     ],
     define: {
       __VITE_APP_PROXY__: JSON.stringify(VITE_APP_PROXY_ENABLE),
@@ -175,13 +196,13 @@ export default defineConfig(({ command, mode }) => {
       // 仅 H5 端生效，其他端不生效（其他端走build，不走devServer)
       proxy: JSON.parse(VITE_APP_PROXY_ENABLE)
         ? {
-            [VITE_APP_PROXY_PREFIX]: {
-              target: VITE_SERVER_BASEURL,
-              changeOrigin: true,
-              // 后端有/api前缀则不做处理，没有则需要去掉
-              rewrite: path => path.replace(new RegExp(`^${VITE_APP_PROXY_PREFIX}`), ''),
-            },
-          }
+          [VITE_APP_PROXY_PREFIX]: {
+            target: VITE_SERVER_BASEURL,
+            changeOrigin: true,
+            // 后端有/api前缀则不做处理，没有则需要去掉
+            rewrite: path => path.replace(new RegExp(`^${VITE_APP_PROXY_PREFIX}`), ''),
+          },
+        }
         : undefined,
     },
     esbuild: {

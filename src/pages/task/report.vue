@@ -10,18 +10,18 @@
 <template>
   <view class="bg-[#fafafa] min-h-screen text-slate-900 font-display pb-20">
     <!-- Header -->
-    <view class="fixed top-0 left-0 w-full z-[999] bg-white/95 backdrop-blur-md border-b border-slate-100 px-4 py-3 flex items-center gap-3 pt-[calc(env(safe-area-inset-top)+44px)]">
-      <button class="p-2 rounded-full hover:bg-slate-100 transition-colors bg-white border-none" @click="goBack">
+    <view class="fixed top-0 left-0 w-full z-[999] bg-white/95 backdrop-blur-md border-b border-slate-100 px-4 flex items-center gap-3 box-border pt-[var(--status-bar-height)] h-[calc(var(--status-bar-height)+44px)]">
+      <view class="size-8 flex items-center justify-center rounded-full hover:bg-slate-100 active:scale-95 transition-all bg-transparent shrink-0" @click="goBack">
         <view class="i-material-symbols-arrow-back text-slate-700 text-xl" />
-      </button>
-      <view>
-        <text class="text-xs font-medium text-slate-500 block">工作汇报</text>
-        <text class="text-base font-bold text-slate-900 block leading-tight">任务进度汇报</text>
+      </view>
+      <view class="flex flex-col justify-center">
+        <text class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-0.5">工作汇报</text>
+        <text class="text-base font-black text-slate-900 block leading-none tracking-tight">任务进度汇报</text>
       </view>
     </view>
 
     <!-- Spacer -->
-    <view class="w-full h-[200rpx] pt-safe"></view>
+    <view class="w-full h-[calc(var(--status-bar-height)+60px)]"></view>
 
     <!-- Task Info Card -->
     <view v-if="taskInfo" class="mx-4 mb-4 p-4 rounded-xl bg-white border border-slate-100 shadow-sm">
@@ -99,9 +99,11 @@
       </view>
 
       <!-- Submit Button -->
-      <button class="w-full py-4 rounded-xl bg-[#00b2b2] text-white font-bold shadow-lg border-none" @click="submitReport">
-        提交汇报
-      </button>
+      <view @click="submitReport" class="w-full py-4 rounded-xl font-bold shadow-lg flex items-center justify-center gap-2"
+        :class="isCompletionMode ? 'bg-gradient-to-r from-[#00b2b2] to-[#007a7a] text-white' : 'bg-[#00b2b2] text-white'">
+        <view v-if="isCompletionMode" class="i-material-symbols-task-alt text-xl" />
+        <text>{{ isCompletionMode ? '提交完成报告' : '提交进度汇报' }}</text>
+      </view>
     </view>
   </view>
 </template>
@@ -119,6 +121,7 @@ const content = ref('')
 const voiceRecording = ref(false)
 const voicePath = ref('')
 const images = ref<string[]>([])
+const isCompletionMode = ref(false)
 
 let recorderManager: any = null
 
@@ -289,9 +292,19 @@ const submitReport = async () => {
 
     console.log('[Report] Report submitted:', res)
 
+    // If in completion mode, also mark task as complete
+    if (isCompletionMode.value && taskId.value) {
+      try {
+        await http.post(`/tasks/${taskId.value}/complete`, { note: content.value })
+        console.log('[Report] Task marked as complete')
+      } catch (e) {
+        console.warn('[Report] Could not mark task as complete:', e)
+      }
+    }
+
     uni.hideLoading()
     uni.showToast({
-      title: '汇报成功',
+      title: isCompletionMode.value ? '完成报告已提交！' : '汇报成功',
       icon: 'success'
     })
 
@@ -313,7 +326,8 @@ onLoad(async (options: any) => {
 
   if (options.taskId) {
     taskId.value = parseInt(options.taskId)
-    console.log('[Report] Task ID:', taskId.value)
+    isCompletionMode.value = options.mode === 'complete'
+    console.log('[Report] Task ID:', taskId.value, '| Mode:', options.mode)
 
     try {
       const tasks = await getTaskList()

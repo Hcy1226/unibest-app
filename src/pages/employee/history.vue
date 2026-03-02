@@ -21,9 +21,9 @@
           <text class="text-base font-bold text-slate-900 dark:text-white leading-tight block">{{ userStore.userInfo?.name || '操作员' }}</text>
         </view>
       </view>
-      <button class="relative p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors bg-transparent border-none">
+      <view class="relative p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors bg-transparent border-none shrink-0 cursor-pointer">
         <view class="i-material-symbols-filter-list text-slate-600 dark:text-slate-300 text-xl" />
-      </button>
+      </view>
     </view>
 
     <view class="flex flex-col gap-6 p-4 mb-safe">

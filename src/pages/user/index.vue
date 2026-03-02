@@ -10,15 +10,15 @@
 <template>
   <view class="bg-[#fafafa] min-h-screen text-slate-900 font-display pb-28">
     <!-- Header -->
-    <view class="fixed top-0 left-0 w-full z-[999] bg-white/95 backdrop-blur-md border-b border-slate-100 px-4 py-3 flex items-center justify-between pt-safe box-border pt-[calc(env(safe-area-inset-top)+44px)]" style="position: fixed; top: 0; left: 0; right: 0; z-index: 999; padding-top: calc(env(safe-area-inset-top) + 44px);">
+    <view class="fixed top-0 left-0 w-full z-[999] bg-white/95 backdrop-blur-md border-b border-slate-100 px-4 flex items-center justify-between box-border pt-[var(--status-bar-height)] h-[calc(var(--status-bar-height)+44px)]">
       <text class="text-lg font-bold text-slate-900 leading-tight">个人中心</text>
-      <button class="relative p-2 rounded-full hover:bg-slate-100 transition-colors bg-white border-none">
-        <view class="i-material-symbols-notifications text-slate-600 text-xl" />
-        <view class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border border-white"></view>
-      </button>
+      <view class="size-8 relative flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors bg-white shrink-0 cursor-pointer border border-slate-100 shadow-sm">
+        <view class="i-material-symbols-notifications text-slate-600 text-[20px]" />
+        <view class="absolute top-[2px] right-[2px] size-2 bg-red-500 rounded-full border border-white"></view>
+      </view>
     </view>
     <!-- Spacer -->
-    <view class="w-full h-[220rpx] pt-safe"></view>
+    <view class="w-full h-[calc(var(--status-bar-height)+60px)]"></view>
 
     <view class="flex flex-col gap-6 p-4">
       <!-- Profile Card -->
@@ -56,30 +56,32 @@
       <view class="flex flex-col gap-3">
          <text class="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">业务功能</text>
          <view class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden flex flex-col">
-            <button class="w-full flex items-center justify-between p-4 border-b border-slate-50 hover:bg-slate-50 transition-colors bg-white border-none group">
+            <!-- 考勤统计 → 班组考勤总览 -->
+            <view @click="goToTeamAttendance" class="w-full flex items-center justify-between p-4 border-b border-slate-50 bg-white active:bg-slate-50 transition-colors">
                <view class="flex items-center gap-3">
-                  <view class="i-material-symbols-calendar-month text-slate-400 group-hover:text-[#00b2b2] transition-colors text-xl" />
+                  <view class="i-material-symbols-calendar-month text-[#00b2b2] text-xl" />
                   <text class="text-sm font-medium text-slate-700">考勤统计</text>
                </view>
                <view class="i-material-symbols-chevron-right text-slate-400 text-lg" />
-            </button>
-            <button class="w-full flex items-center justify-between p-4 border-b border-slate-50 hover:bg-slate-50 transition-colors bg-white border-none group">
+            </view>
+            <!-- 打卡记录 → 个人打卡页 -->
+            <view @click="goToAttendance" class="w-full flex items-center justify-between p-4 border-b border-slate-50 bg-white active:bg-slate-50 transition-colors">
                <view class="flex items-center gap-3">
-                  <view class="i-material-symbols-history text-slate-400 group-hover:text-[#00b2b2] transition-colors text-xl" />
+                  <view class="i-material-symbols-fingerprint text-slate-400 text-xl" />
                   <text class="text-sm font-medium text-slate-700">打卡记录</text>
                </view>
                <view class="i-material-symbols-chevron-right text-slate-400 text-lg" />
-            </button>
-            <button class="w-full flex items-center justify-between p-4 border-b border-slate-50 hover:bg-slate-50 transition-colors bg-white border-none group">
+            </view>
+            <view class="w-full flex items-center justify-between p-4 border-b border-slate-50 bg-white active:bg-slate-50 group transition-colors">
                <view class="flex items-center gap-3">
-                  <view class="i-material-symbols-fact-check text-slate-400 group-hover:text-[#00b2b2] transition-colors text-xl" />
+                  <view class="i-material-symbols-fact-check text-slate-400 text-xl" />
                   <text class="text-sm font-medium text-slate-700">我的审批</text>
                </view>
                <view class="flex items-center gap-2">
                   <view class="size-2 rounded-full bg-red-500"></view>
                   <view class="i-material-symbols-chevron-right text-slate-400 text-lg" />
                </view>
-            </button>
+            </view>
          </view>
       </view>
 
@@ -87,24 +89,24 @@
       <view class="flex flex-col gap-3">
          <text class="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">其他</text>
          <view class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden flex flex-col">
-            <button class="w-full flex items-center justify-between p-4 border-b border-slate-50 hover:bg-slate-50 transition-colors bg-white border-none group">
+            <view class="w-full flex items-center justify-between p-4 border-b border-slate-50 bg-white active:bg-slate-50 transition-colors">
                <view class="flex items-center gap-3">
-                  <view class="i-material-symbols-settings text-slate-400 group-hover:text-[#00b2b2] transition-colors text-xl" />
+                  <view class="i-material-symbols-settings text-slate-400 text-xl" />
                   <text class="text-sm font-medium text-slate-700">系统设置</text>
                </view>
                <view class="i-material-symbols-chevron-right text-slate-400 text-lg" />
-            </button>
-             <button class="w-full flex items-center justify-between p-4 border-b border-slate-50 hover:bg-slate-50 transition-colors bg-white border-none group">
+            </view>
+             <view class="w-full flex items-center justify-between p-4 border-b border-slate-50 bg-white active:bg-slate-50 transition-colors">
                <view class="flex items-center gap-3">
-                  <view class="i-material-symbols-help text-slate-400 group-hover:text-[#00b2b2] transition-colors text-xl" />
+                  <view class="i-material-symbols-help text-slate-400 text-xl" />
                   <text class="text-sm font-medium text-slate-700">帮助与反馈</text>
                </view>
                <view class="i-material-symbols-chevron-right text-slate-400 text-lg" />
-            </button>
+            </view>
          </view>
       </view>
 
-      <button class="w-full py-3.5 rounded-xl border border-slate-200 text-red-500 font-semibold hover:bg-red-50 transition-colors mb-4 text-sm bg-white" @click="handleLogout">退出登录</button>
+      <view @click="handleLogout" class="w-full py-3.5 rounded-xl border border-slate-200 text-center text-red-500 font-semibold transition-colors mb-4 text-sm bg-white active:bg-red-50">退出登录</view>
     </view>
   </view>
 </template>
@@ -141,9 +143,11 @@ onShow(() => {
     }
   } else {
     isSupervisor.value = true
-    // Reset to supervisor defaults if needed
   }
 })
+
+const goToTeamAttendance = () => uni.navigateTo({ url: '/pages/attendance/team' })
+const goToAttendance = () => uni.switchTab({ url: '/pages/attendance/index' })
 
 const handleLogout = () => {
     tokenStore.logout()

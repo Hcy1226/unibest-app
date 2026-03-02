@@ -12,7 +12,7 @@ const displayTabbarList = computed(() => {
   const role = userStore.userInfo?.role
   if (role === 'employee') {
     return tabbarList.filter(item => 
-      ['/pages/employee/index', '/pages/employee/history', '/pages/employee/statistics', '/pages/user/index'].includes(item.pagePath)
+      ['/pages/employee/index', '/pages/employee/history', '/pages/attendance/index', '/pages/user/index'].includes(item.pagePath)
     )
   }
   return tabbarList.filter(item => 

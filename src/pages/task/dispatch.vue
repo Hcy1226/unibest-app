@@ -10,20 +10,20 @@
 <template>
   <view class="bg-[#fafafa] min-h-screen text-slate-900 font-display pb-10">
     <!-- Header -->
-    <view class="fixed top-0 left-0 w-full z-[999] bg-white/95 backdrop-blur-md border-b border-slate-100 px-4 py-3 flex items-center justify-between pt-safe box-border pt-[calc(env(safe-area-inset-top)+56px)]" style="position: fixed; top: 0; left: 0; right: 0; z-index: 999; padding-top: calc(env(safe-area-inset-top)); height: 88px;">
-      <view class="flex items-center gap-3 mt-8">
-        <button class="p-2 -ml-2 rounded-full hover:bg-slate-100 transition-colors bg-transparent border-none" @click="goBack">
-           <view class="i-material-symbols-arrow-back text-slate-600 text-xl" />
-        </button>
-        <text class="text-lg font-bold text-slate-900">任务拆分</text>
+    <view class="fixed top-0 left-0 w-full z-[999] bg-white/95 backdrop-blur-md border-b border-slate-100 px-4 flex items-center justify-between box-border pt-[var(--status-bar-height)] h-[calc(var(--status-bar-height)+56px)]">
+      <view class="flex items-center gap-3">
+        <view class="size-8 flex items-center justify-center rounded-full hover:bg-slate-100 active:scale-95 transition-all bg-transparent shrink-0 -ml-2" @click="goBack">
+           <view class="i-material-symbols-arrow-back text-slate-600 text-[18px]" />
+        </view>
+        <text class="text-lg font-bold text-slate-900 mt-0.5">任务拆分</text>
       </view>
-      <button class="mt-8 bg-[#00b2b2] text-white px-3 py-1.5 rounded-lg text-sm font-bold flex items-center gap-1 shadow-sm border-none hover:bg-[#009b9b] transition-colors" @click="submitSplit">
-        <view class="i-material-symbols-send text-base" />
+      <button class="bg-[#00b2b2] text-white px-3 py-1.5 rounded-lg text-sm font-bold flex items-center gap-1 shadow-sm border-none hover:bg-[#009b9b] transition-colors" @click="submitSplit">
+        <view class="i-material-symbols-send text-[16px]" />
         <text>下发</text>
       </button>
     </view>
     <!-- Spacer -->
-    <view class="w-full h-[88px]"></view>
+    <view class="w-full h-[calc(var(--status-bar-height)+66px)]"></view>
 
     <view v-if="parentTask" class="flex flex-col gap-6 p-5">
       <!-- Main Task Info -->

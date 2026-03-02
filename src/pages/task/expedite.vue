@@ -10,20 +10,20 @@
 <template>
   <view class="bg-[#fafafa] min-h-screen text-slate-900 font-display pb-36">
     <!-- Header -->
-    <view class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-100 px-4 py-3 flex items-center gap-3 pt-safe">
-      <button class="p-2 -ml-2 rounded-full hover:bg-slate-100 transition-colors bg-white border-none" @click="uni.navigateBack()">
+    <view class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-100 px-4 flex items-center gap-3 box-border pt-[var(--status-bar-height)] h-[calc(var(--status-bar-height)+50px)]">
+      <view class="size-8 flex items-center justify-center rounded-full hover:bg-slate-100 active:scale-95 transition-all bg-transparent shrink-0 -ml-1" @click="goBack">
         <view class="i-material-symbols-arrow-back text-slate-600 text-xl" />
-      </button>
-      <view class="flex-1">
-        <text class="text-xs font-medium text-slate-500 block">任务管理</text>
+      </view>
+      <view class="flex-1 flex flex-col justify-center">
+        <text class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-0.5">任务管理</text>
         <view class="flex items-center gap-2">
-           <text class="text-lg font-bold text-slate-900 leading-tight">任务催办反馈</text>
-           <text class="px-2 py-0.5 rounded-full bg-red-100 text-red-600 text-[10px] font-bold">紧急</text>
+           <text class="text-lg font-bold text-slate-900 leading-none">任务催办反馈</text>
+           <text class="px-2 py-[2px] rounded-full bg-red-100 text-red-600 text-[9px] font-bold">紧急</text>
         </view>
       </view>
-       <button class="p-2 rounded-full hover:bg-slate-100 transition-colors bg-white border-none">
+      <view class="size-8 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors bg-white shrink-0 cursor-pointer">
         <view class="i-material-symbols-help text-slate-400 text-xl" />
-      </button>
+      </view>
     </view>
 
     <view class="flex flex-col gap-5 p-4">
@@ -150,5 +150,7 @@
 </template>
 
 <script lang="ts" setup>
-
+const goBack = () => {
+    uni.navigateBack()
+}
 </script>

@@ -10,18 +10,18 @@
 <template>
   <view class="bg-[#fafafa] min-h-screen text-slate-900 font-display pb-20">
     <!-- Header -->
-    <view class="fixed top-0 left-0 w-full z-[999] bg-white/95 backdrop-blur-md border-b border-slate-100 px-4 py-3 flex items-center gap-3 pt-[calc(env(safe-area-inset-top)+44px)]">
-      <button class="p-2 rounded-full hover:bg-slate-100 transition-colors bg-white border-none" @click="goBack">
+    <view class="fixed top-0 left-0 w-full z-[999] bg-white/95 backdrop-blur-md border-b border-slate-100 px-4 flex items-center gap-3 box-border pt-[var(--status-bar-height)] h-[calc(var(--status-bar-height)+44px)]">
+      <view class="size-8 flex items-center justify-center rounded-full hover:bg-slate-100 active:scale-95 transition-all bg-transparent shrink-0" @click="goBack">
         <view class="i-material-symbols-arrow-back text-slate-700 text-xl" />
-      </button>
-      <view>
-        <text class="text-xs font-medium text-slate-500 block">任务拆分</text>
-        <text class="text-base font-bold text-slate-900 block leading-tight">创建子任务</text>
+      </view>
+      <view class="flex flex-col justify-center">
+        <text class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-0.5">任务拆分</text>
+        <text class="text-base font-black text-slate-900 block leading-none tracking-tight">创建子任务</text>
       </view>
     </view>
 
     <!-- Spacer -->
-    <view class="w-full h-[200rpx] pt-safe"></view>
+    <view class="w-full h-[calc(var(--status-bar-height)+60px)]"></view>
 
     <!-- Task Info Card -->
     <view v-if="taskInfo" class="mx-4 mb-4 p-4 rounded-xl bg-white border border-slate-100 shadow-sm">
@@ -187,7 +187,7 @@ const submitSplit = async () => {
 
   try {
     const res = await uni.request({
-      url: `http://127.0.0.1:3000/tasks/${taskId.value}/split`,
+      url: `http://47.84.125.77/api/tasks/${taskId.value}/split`,
       method: 'POST',
       header: {
         'Content-Type': 'application/json',

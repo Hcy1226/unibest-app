@@ -78,10 +78,10 @@ export const customTabbarList: CustomTabBarItem[] = [
     icon: 'i-material-symbols-history',
   },
   {
-    text: '统计',
-    pagePath: 'pages/employee/statistics',
+    text: '考勤',
+    pagePath: 'pages/attendance/index',
     iconType: 'unocss',
-    icon: 'i-material-symbols-bar-chart',
+    icon: 'i-material-symbols-fingerprint',
   },
   {
     text: '我的',

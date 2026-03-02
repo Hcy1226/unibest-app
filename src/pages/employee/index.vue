@@ -10,25 +10,25 @@
 <template>
   <view class="bg-[#fafafa] dark:bg-[#17191c] min-h-screen text-slate-900 dark:text-slate-100 font-display pb-32">
     <!-- Header -->
-    <view class="fixed top-0 left-0 w-full z-[999] bg-white/95 dark:bg-[#23262a]/95 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 px-4 py-3 flex items-center justify-between pt-[calc(env(safe-area-inset-top)+44px)]">
+    <view class="fixed top-0 left-0 w-full z-[999] bg-white/95 dark:bg-[#23262a]/95 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 px-4 flex items-center justify-between box-border pt-[var(--status-bar-height)] h-[calc(var(--status-bar-height)+56px)]">
       <view class="flex items-center gap-3">
         <view class="relative group cursor-pointer">
           <view class="size-10 rounded-full bg-cover bg-center border-2 border-[#00b2b2]" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC9ni5JPq3Fb1n-ptGOUQvLTCsMEpWa_6qmrKpKzp2xGH4UjwY-PdXXgVjVfnGpN9G-FcIvR1xa7r1u844NKBS7Xwm-El5weCJJ17pOvU3rY92H1PKfbr1T99Xs4GcVBfjXl-7cx-A3DcJtxCzfHCOmWh4zWOodeDH4Z3szYWSEJQZHLmPWyLJgNhwW9BxmSQzSPM0hYsCNln4N0afZjSIxgpT82HoSEdW0GjB0PgXs3MhAIIQhZEiuos2EirWctQp6aINfjh1tFbA');"></view>
           <view class="absolute bottom-0 right-0 size-3 bg-green-500 rounded-full border-2 border-white dark:border-[#23262a]"></view>
         </view>
-        <view>
-          <text class="text-xs font-medium text-slate-500 dark:text-slate-400 block">下午好,</text>
-          <text class="text-base font-bold text-slate-900 dark:text-white leading-tight">{{ userInfo.name || '操作员' }}</text>
+        <view class="flex flex-col justify-center">
+          <text class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-0.5 mt-0.5">下午好,</text>
+          <text class="text-base font-bold text-slate-900 dark:text-white leading-none">{{ userInfo.name || '操作员' }}</text>
         </view>
       </view>
-      <button class="relative p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors bg-transparent border-none">
-        <view class="i-material-symbols-notifications text-slate-600 dark:text-slate-300 text-2xl" />
-        <view class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border border-white dark:border-[#23262a]"></view>
-      </button>
+      <view class="relative size-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors bg-white dark:bg-[#2a2d32] border border-slate-100 dark:border-slate-800 shadow-sm flex items-center justify-center shrink-0 cursor-pointer">
+        <view class="i-material-symbols-notifications text-slate-600 dark:text-slate-300 text-xl" />
+        <view class="absolute top-[2px] right-[4px] size-2 bg-red-500 rounded-full border border-white dark:border-[#23262a]"></view>
+      </view>
     </view>
     
     <!-- Spacer for Fixed Header -->
-    <view class="w-full h-[200rpx]"></view>
+    <view class="w-full h-[calc(var(--status-bar-height)+70px)]"></view>
 
     <!-- Main Content -->
     <view class="flex flex-col gap-6 p-4">
